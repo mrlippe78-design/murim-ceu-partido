@@ -83,17 +83,7 @@ const og = `/og/${pagina.id.replace(/\//g, '--')}.jpg`;
 </Base>
 
 <script>
-  // tabelas largas ganham rolagem horizontal; o sumário marca a seção visível
-  document.querySelectorAll('.prosa table').forEach((t) => {
-    if (t.parentElement?.classList.contains('tabela-rolagem')) return;
-    const w = document.createElement('div');
-    w.className = 'tabela-rolagem';
-    w.tabIndex = 0;
-    w.setAttribute('role', 'region');
-    w.setAttribute('aria-label', 'Tabela (role para os lados)');
-    t.replaceWith(w);
-    w.append(t);
-  });
+  // o sumário marca a seção visível (tabelas largas rolam para os lados só com CSS, sem mexer no layout)
   const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a')];
   if (links.length && 'IntersectionObserver' in window) {
     const obs = new IntersectionObserver((es) => {

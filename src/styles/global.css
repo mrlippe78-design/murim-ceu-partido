@@ -2,12 +2,23 @@
    MURIM: CÉU PARTIDO — identidade visual
    Nanquim, papel envelhecido, vermelho-sangue. Ouro só em detalhes.
    ═══════════════════════════════════════════════════════════════ */
-@import '@fontsource/zen-antique/400.css';
-@import '@fontsource/alegreya/400.css';
-@import '@fontsource/alegreya/400-italic.css';
-@import '@fontsource/alegreya/700.css';
-@import '@fontsource/alegreya-sans/500.css';
-@import '@fontsource/alegreya-sans/700.css';
+/* Só os subconjuntos latinos (português). Os ideogramas vêm de um arquivo próprio,
+   gerado por scripts/gerar-fonte-cjk.mjs com apenas os caracteres usados no site. */
+/* Arquivos copiados de @fontsource para public/fontes/ (endereço fixo = dá para pré-carregar no <head>). */
+@font-face { font-family: 'Zen Antique'; font-weight: 400; font-display: swap; src: url('/murim-ceu-partido/fontes/zen-antique-latin-400-normal.woff2') format('woff2'); unicode-range: U+0000-02FF, U+2000-206F, U+20AC, U+2122, U+2190-21FF, U+2212; }
+@font-face { font-family: 'Alegreya'; font-weight: 400; font-display: swap; src: url('/murim-ceu-partido/fontes/alegreya-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Alegreya'; font-weight: 400; font-style: italic; font-display: swap; src: url('/murim-ceu-partido/fontes/alegreya-latin-400-italic.woff2') format('woff2'); }
+@font-face { font-family: 'Alegreya'; font-weight: 700; font-display: swap; src: url('/murim-ceu-partido/fontes/alegreya-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Alegreya Sans'; font-weight: 500; font-display: swap; src: url('/murim-ceu-partido/fontes/alegreya-sans-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Alegreya Sans'; font-weight: 700; font-display: swap; src: url('/murim-ceu-partido/fontes/alegreya-sans-latin-700-normal.woff2') format('woff2'); }
+@font-face {
+  font-family: 'Zen Antique';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/murim-ceu-partido/fontes/zen-antique-cjk.woff2') format('woff2');
+  unicode-range: U+3000-303F, U+3400-9FFF, U+FF00-FFEF;
+}
 
 :root {
   --tinta: #0c0a09;
@@ -45,6 +56,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--topo) + 1rem); }
 body {
   margin: 0;
@@ -63,9 +75,9 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 100;
-  opacity: .07;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .9 0 0 0 0 .85 0 0 0 0 .75 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
+  opacity: .045;
+  /* ladrilho pré-renderizado (public/textura-papel.png): sem filtro nem mesclagem a cada quadro */
+  background-image: url('/murim-ceu-partido/textura-papel.png');
 }
 
 img, svg, canvas { max-width: 100%; display: block; }
@@ -237,7 +249,8 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   margin: 1.8rem 0; padding: .2rem 0 .2rem 1.3rem; border-left: 2px solid var(--sangue-vivo);
   font-style: italic; color: var(--papel-2); font-size: 1.15rem;
 }
-.prosa table { margin: 0; }
+/* tabela vira uma caixa com rolagem horizontal; as linhas continuam alinhadas (caixa de tabela anônima) */
+.prosa table { display: block; max-width: 100%; overflow-x: auto; margin: 1.2rem 0 1.6rem; border: var(--borda); }
 .prosa .tabela-rolagem table { border: 0; }
 .prosa h2::before { content: '— '; color: var(--sangue-vivo); }
 .prosa code { font: .9em ui-monospace, Consolas, monospace; background: var(--tinta-3); padding: .1em .35em; }

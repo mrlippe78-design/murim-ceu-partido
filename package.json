@@ -9,7 +9,8 @@
     "test": "vitest run",
     "imagens": "node scripts/otimizar-imagens.mjs",
     "og": "node scripts/gerar-og.mjs",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "fonte": "node scripts/gerar-fonte-cjk.mjs"
   },
   "license": "MIT",
   "type": "module",
@@ -18,6 +19,7 @@
     "lighthouse": "^13.6.0",
     "pagefind": "^1.6.0",
     "sharp": "^0.35.5",
+    "subset-font": "^2.9.0",
     "supabase": "^3.2.0",
     "vitest": "^5.1.1"
   },

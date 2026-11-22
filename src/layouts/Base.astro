@@ -33,6 +33,9 @@ const ultimaNovidade = novidades[0];
     <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={url('/icones/icone-192.png')} />
     <link rel="manifest" href={url('/manifest.webmanifest')} />
+    <link rel="preload" href={url('/fontes/alegreya-latin-400-normal.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={url('/fontes/zen-antique-latin-400-normal.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={url('/fontes/alegreya-sans-latin-700-normal.woff2')} as="font" type="font/woff2" crossorigin />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content={site.titulo} />
@@ -57,7 +60,7 @@ const ultimaNovidade = novidades[0];
       <button type="button" class="fechar-faixa" aria-label="Dispensar aviso">×</button>
     </div>
     <header class="topo">
-      <a class="marca" href={url('/')} aria-label="Murim: Céu Partido, página inicial">
+      <a class="marca" href={url("/")}>
         <span class="selo" aria-hidden="true">裂</span>
         <span class="marca-texto">Murim<span class="marca-sub">Céu Partido</span></span>
       </a>

@@ -15,7 +15,7 @@ function cinzas() {
   };
   redimensionar();
   window.addEventListener('resize', redimensionar, { passive: true });
-  const n = w < 700 ? 28 : 55;
+  const n = w < 700 ? 18 : 45;
   const p = Array.from({ length: n }, () => novo(true));
   function novo(inicio = false) {
     const brasa = Math.random() < 0.22;
@@ -73,6 +73,10 @@ function revelar() {
 export function iniciarConvite() {
   revelar();
   // cinzas depois do primeiro desenho, para não competir com o carregamento
-  if ('requestIdleCallback' in window) (window as Window).requestIdleCallback(cinzas, { timeout: 1500 });
-  else setTimeout(cinzas, 600);
+  // cinzas só depois que a página terminou de carregar e ficou ociosa
+  const comecar = () => setTimeout(() => {
+    if ('requestIdleCallback' in window) (window as Window).requestIdleCallback(cinzas, { timeout: 2000 });
+    else cinzas();
+  }, 2500);
+  if (document.readyState === 'complete') comecar(); else addEventListener('load', comecar, { once: true });
 }

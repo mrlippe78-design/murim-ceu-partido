@@ -10,7 +10,7 @@ Estrada dos Pinheiros, fim de tarde. **Yun Seo-ah**, discípula da Montanha Cele
 
 ## As fichas
 
-| | Yun Seo-ah | Gal-pi |
+| Atributo | Yun Seo-ah | Gal-pi |
 |---|---|---|
 | Reino | Terceira Classe | Terceira Classe |
 | Força | 900 | 1.500 |

@@ -21,7 +21,7 @@ import regioes from '../data/mapa.json';
           <path d="M960 40 Q990 300 960 560 L1000 700 L1000 0 Z" fill="url(#hachura)" opacity=".8" />
           <text x="975" y="380" class="mar" transform="rotate(90 975 380)">MAR DO LESTE</text>
           {regioes.map((r) => (
-            <g class="regiao" data-regiao={r.chave} tabindex="0" role="button" aria-label={`${r.nome}: ver detalhes`}>
+            <g class="regiao" data-regiao={r.chave} tabindex="0" role="button" aria-label={`${r.ideograma} ${r.nome}`}>
               <path d={r.caminho} filter="url(#tinta)" />
               <text x={r.x} y={r.y} class="ideo" text-anchor="middle">{r.ideograma}</text>
               <text x={r.x} y={r.y + 36} class="nome" text-anchor="middle">{r.nome}</text>

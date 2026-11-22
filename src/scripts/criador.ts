@@ -34,12 +34,14 @@ const salvarAgora = async () => {
   pendente = false;
   $('#salvo').textContent = 'Salvando…';
   const { error } = await supabase.from('personagens').update({ ficha, nome: p.nome }).eq('id', p.id);
-  if (error) { $('#salvo').textContent = 'Não salvou.'; toast(mensagemErro(error), true); return; }
+  if (error) { pendente = true; $('#salvo').textContent = 'Não salvou.'; toast(mensagemErro(error), true); return; }
+  // se algo mudou enquanto esta gravação viajava, ainda há alterações pendentes
+  if (pendente) { $('#salvo').textContent = 'Alterações não salvas…'; return; }
   $('#salvo').textContent = `Rascunho salvo às ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
 };
 const salvarAdiado = adiar(salvarAgora, 700);
 let pendente = false;
-function salvar() { pendente = true; salvarAdiado(); }
+function salvar() { pendente = true; $('#salvo').textContent = 'Alterações não salvas…'; salvarAdiado(); }
 /** Grava já o que estiver pendente (troca de passo, saída da página, aba escondida). */
 function salvarJa() { if (pendente) { pendente = false; void salvarAgora(); } }
 function mudou() { atualizarResumo(); salvar(); }
@@ -148,7 +150,7 @@ const render: Array<() => string> = [
             <div class="campo"><label for="t${i}-tipo">Tipo</label><select id="t${i}-tipo" data-t="tipo" ${dis}>${tipos.map((x) => `<option value="${x.chave}" ${t.tipo === x.chave ? 'selected' : ''}>${x.nome}</option>`).join('')}</select></div>
             <label class="opcao" style="padding:1rem 1rem 1rem 3rem;align-self:end"><input type="checkbox" data-t="defensiva" ${t.defensiva ? 'checked' : ''} ${dis} /><strong style="font-size:1rem">Defensiva</strong><span class="det">+20% de orçamento</span></label>
           </div>
-          <p class="rotulo ouro">Bônus: ${a.usado} de ${lim}</p>
+          <p class="rotulo ouro" data-orc>Bônus: ${a.usado} de ${lim}</p>
           <div class="barra ${a.usado > lim ? 'estourou' : ''}"><span style="width:${Math.min(100, (a.usado / Math.max(1, lim)) * 100)}%"></span></div>
           <div class="grade-campos cinco">${ATRIBUTOS.map((k) => `<div class="campo"><label for="t${i}-${k}">${NOME_ATRIBUTO[k]}</label><input type="number" id="t${i}-${k}" data-dist="${k}" min="0" step="10" value="${t.distribuicao?.[k] ?? ''}" ${dis} /></div>`).join('')}</div>
           <div class="grade-campos">
@@ -156,7 +158,7 @@ const render: Array<() => string> = [
             <div class="campo"><label for="t${i}-rec">Recarga (turnos)</label><input type="number" id="t${i}-rec" data-t="recarga" min="1" max="4" value="${t.recarga}" ${dis} /></div>
             <div class="campo"><label for="t${i}-desc">Descrição curta</label><input id="t${i}-desc" data-t="descricao" value="${esc(t.descricao ?? '')}" maxlength="240" ${dis} /></div>
           </div>
-          ${a.erros.length && t.nome ? `<ul class="lista-erros">${a.erros.map((e) => `<li>${esc(e)}</li>`).join('')}</ul>` : ''}
+          <ul class="lista-erros" data-erros>${a.erros.length && t.nome ? a.erros.map((e) => `<li>${esc(e)}</li>`).join('') : ''}</ul>
           ${ficha.tecnicas!.length > DADOS.criacao.tecnicasBasicas && editavel ? `<button type="button" class="btn fantasma pequeno" data-remover="${i}">Remover técnica</button>` : ''}
         </div>`;
       }).join('')}
@@ -231,6 +233,16 @@ function rerender() {
   }
 }
 
+function atualizarBloco(bloco: HTMLElement, t: Tecnica) {
+  const a = avaliarTecnica(t, 'terceira');
+  const lim = limiteTecnica(t);
+  bloco.querySelector('[data-orc]')!.textContent = `Bônus: ${a.usado} de ${lim}`;
+  const barra = bloco.querySelector<HTMLElement>('.barra')!;
+  barra.classList.toggle('estourou', a.usado > lim);
+  barra.querySelector('span')!.style.width = `${Math.min(100, (a.usado / Math.max(1, lim)) * 100)}%`;
+  bloco.querySelector('[data-erros]')!.innerHTML = a.erros.length && t.nome ? a.erros.map((e) => `<li>${esc(e)}</li>`).join('') : '';
+}
+
 function ligar() {
   const palco = $('#palco');
   palco.querySelectorAll<HTMLInputElement>('input[name="linhagem"]').forEach((i) => i.onchange = () => { ficha.linhagem = i.value; mudou(); });
@@ -245,10 +257,22 @@ function ligar() {
     mudou(); rerender();
   });
   // atributos
-  const setAttr = (k: Atributo, v: number) => { ficha.atributos![k] = Math.round(v); mudou(); rerender(); };
+  // atualiza números e o deslizante sem redesenhar a tela (não rouba o campo em uso)
+  const setAttr = (k: Atributo, v: number, origem?: HTMLInputElement) => {
+    ficha.atributos![k] = Math.round(v) || 0;
+    mudou();
+    palco.querySelectorAll<HTMLInputElement>(`input[data-attr="${k}"]`).forEach((x) => { if (x !== origem) x.value = String(ficha.atributos![k]); });
+    const d = derivados(ficha, p.corpo, p.linhagem_rara);
+    const resta = DADOS.criacao.pontos - ATRIBUTOS.reduce((a, x) => a + Number(ficha.atributos?.[x] ?? 0), 0);
+    const cont = palco.querySelector('.contador');
+    if (cont) cont.innerHTML = `<span>Restam<strong class="${resta === 0 ? 'ok' : 'erro'}">${resta}</strong></span><span>Vida<strong>${d.vida.toLocaleString('pt-BR')}</strong></span><span>Qi<strong>${d.qiMax.toLocaleString('pt-BR')}</strong></span>`;
+    palco.querySelectorAll<HTMLElement>('.attr-linha').forEach((linha, ix) => {
+      const forte = linha.querySelector('.final strong');
+      if (forte) forte.textContent = d.atributos[ATRIBUTOS[ix]].toLocaleString('pt-BR');
+    });
+  };
   palco.querySelectorAll<HTMLInputElement>('input[data-attr]').forEach((i) => {
-    i.onchange = () => setAttr(i.dataset.attr as Atributo, Number(i.value));
-    if (i.type === 'range') i.oninput = () => setAttr(i.dataset.attr as Atributo, Number(i.value));
+    i.oninput = i.onchange = () => setAttr(i.dataset.attr as Atributo, Number(i.value), i);
   });
   palco.querySelectorAll<HTMLButtonElement>('button[data-delta]').forEach((b) => b.onclick = () => {
     const k = b.dataset.attr as Atributo;
@@ -265,11 +289,13 @@ function ligar() {
         (t as unknown as Record<string, unknown>)[k] = v;
         mudou();
       };
-      i.oninput = ev;
-      i.onchange = () => { ev(); rerender(); };
+      // texto e números: atualiza só o orçamento deste bloco (redesenhar a tela roubaria o campo em uso)
+      i.oninput = () => { ev(); atualizarBloco(bloco, t); };
+      // tipo e "defensiva" mudam o orçamento e as opções: aí sim redesenha
+      i.onchange = () => { ev(); if (i.tagName === 'SELECT' || i.type === 'checkbox') rerender(); else atualizarBloco(bloco, t); };
     });
     bloco.querySelectorAll<HTMLInputElement>('[data-dist]').forEach((i) => {
-      i.onchange = () => { t.distribuicao[i.dataset.dist as Atributo] = Number(i.value) || 0; mudou(); rerender(); };
+      i.oninput = i.onchange = () => { t.distribuicao[i.dataset.dist as Atributo] = Number(i.value) || 0; mudou(); atualizarBloco(bloco, t); };
     });
   });
   palco.querySelectorAll<HTMLButtonElement>('[data-remover]').forEach((b) => b.onclick = () => { ficha.tecnicas!.splice(Number(b.dataset.remover), 1); mudou(); rerender(); });

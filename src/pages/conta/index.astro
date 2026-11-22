@@ -27,7 +27,7 @@ import { url } from '../../lib/caminhos';
       <form id="form-criar" class="painel" role="tabpanel" aria-labelledby="aba-criar" hidden>
         <div class="campo"><label for="c-nome">Nome de exibição</label><input id="c-nome" required minlength="2" maxlength="40" autocomplete="nickname" /><p class="ajuda">Use o mesmo nome que aparece no seu WhatsApp, para a administração reconhecer você.</p></div>
         <div class="campo"><label for="c-email">E-mail</label><input id="c-email" type="email" autocomplete="email" required /></div>
-        <div class="campo"><label for="c-senha">Senha (mínimo 8 caracteres)</label><input id="c-senha" type="password" autocomplete="new-password" required minlength="8" /></div>
+        <div class="campo"><label for="c-senha">Senha (mínimo 8 caracteres, com letras e números)</label><input id="c-senha" type="password" autocomplete="new-password" required minlength="8" /></div>
         <label class="check"><input type="checkbox" id="c-aceite" required /> <span>Li a <a href={url('/privacidade/')}>política de privacidade</a> e aceito as <a href={url('/biblioteca/comece/convivencia/')}>regras de convivência</a>.</span></label>
         <button class="btn" type="submit">Criar conta</button>
         <p class="ajuda">Não pedimos telefone, CPF nem nenhum dado sensível.</p>

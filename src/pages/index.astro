@@ -31,6 +31,8 @@ const rumores = [
 ];
 ---
 <Base classe="convite" descricao={`${site.frase} ${site.convite}`}>
+  <link slot="head" rel="preload" as="image" href={hero.srcMovel} media="(max-width: 700px)" fetchpriority="high" />
+  <link slot="head" rel="preload" as="image" href={hero.src} media="(min-width: 701px)" fetchpriority="high" />
   <section class="hero" aria-labelledby="titulo-hero">
     <picture class="hero-arte">
       <source media="(max-width: 700px)" srcset={hero.srcMovel} />
@@ -163,7 +165,7 @@ const rumores = [
   .hero-arte img {
     width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%;
     filter: grayscale(.55) contrast(1.2) brightness(.72) sepia(.4);
-    animation: respirar 18s ease-in-out infinite alternate;
+    /* a "respiração" da pintura só no computador: no celular custa bateria e quadros */
   }
   .hero::before { /* nanquim escorrendo sobre a pintura */
     content: ''; position: absolute; inset: 0; z-index: -2;
@@ -178,6 +180,7 @@ const rumores = [
     mix-blend-mode: screen;
   }
   @keyframes respirar { to { transform: scale(1.06) translateY(-1.5%); } }
+  @media (min-width: 900px) and (prefers-reduced-motion: no-preference) { .hero-arte img { animation: respirar 18s ease-in-out infinite alternate; } }
   .hero-ideograma {
     position: absolute; z-index: -1; left: -.18em; bottom: -.12em;
     font: 400 clamp(19rem, 72vw, 46rem)/.8 var(--f-display);
