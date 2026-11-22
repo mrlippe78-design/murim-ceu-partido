@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base titulo="Perfil do personagem" descricao="Ficha pública de um personagem de Murim: Céu Partido." og="/og/personagem.jpg">
+  <div class="envoltorio pagina perfil" id="perfil">
+    <p class="mudo" id="carregando">Abrindo o pergaminho…</p>
+  </div>
+</Base>
+
+<script>
+  import { iniciarPerfil } from '../scripts/perfil';
+  iniciarPerfil();
+</script>
+
+<style is:global>
+  .perfil-cabeca { position: relative; display: grid; gap: 1rem; padding: 2rem 0 1.5rem; border-bottom: 1px solid var(--linha); margin-bottom: 2rem; }
+  .perfil-cabeca .fantasma-ideograma { position: absolute; right: 0; top: -1rem; font: 400 clamp(8rem, 26vw, 15rem)/1 var(--f-display); color: var(--sangue); opacity: .13; z-index: -1; }
+  .perfil-cabeca h1 { margin: 0; }
+  .perfil-cabeca .alcunha { font: italic 1.4rem var(--f-texto); color: var(--ouro-claro); margin: 0; }
+  .perfil-cabeca .linha-flex .rotulo { color: var(--papel-2); }
+  .perfil.morto { filter: grayscale(.85); }
+  .memorial { padding: 1rem; border: 1px solid var(--papel-3); text-align: center; font-style: italic; color: var(--papel-2); }
+  .corpo-destaque { display: inline-flex; flex-direction: column; padding: .8rem 1.1rem; border: 1px solid var(--r); background: linear-gradient(135deg, color-mix(in srgb, var(--r) 14%, transparent), transparent); }
+  .corpo-destaque.r-lendario, .corpo-destaque.r-mitico { box-shadow: 0 0 24px color-mix(in srgb, var(--r) 45%, transparent); animation: pulsar 3s ease-in-out infinite; }
+  @keyframes pulsar { 50% { box-shadow: 0 0 40px color-mix(in srgb, var(--r) 70%, transparent); } }
+  .corpo-destaque strong { font: 400 1.3rem var(--f-display); }
+  .numeros { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--linha); border: var(--borda); margin-bottom: 2rem; }
+  @media (min-width: 700px) { .numeros { grid-template-columns: repeat(4, 1fr); } }
+  .numeros div { background: var(--tinta-2); padding: .9rem 1rem; }
+  .numeros dt { font: 700 .72rem var(--f-ui); letter-spacing: .16em; text-transform: uppercase; color: var(--papel-3); }
+  .numeros dd { margin: .2rem 0 0; font: 700 1.4rem var(--f-ui); font-variant-numeric: tabular-nums; }
+  .numeros dd small { display: block; font: 500 .82rem var(--f-ui); color: var(--papel-3); }
+  .progresso-pe { height: .5rem; background: var(--tinta-4); margin-top: .5rem; }
+  .progresso-pe span { display: block; height: 100%; background: linear-gradient(90deg, var(--sangue), var(--sangue-vivo)); }
+  .corrup { height: .5rem; background: linear-gradient(90deg, #3b2f28 0 25%, #4a2626 25% 50%, #5a1d1d 50% 75%, #6d1010 75%); position: relative; margin-top: .5rem; }
+  .corrup span { position: absolute; top: -3px; width: 3px; height: calc(100% + 6px); background: #fff; }
+  .perfil-grade { display: grid; gap: 2rem; }
+  @media (min-width: 1000px) { .perfil-grade { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); } }
+  .bloco { margin-bottom: 2rem; }
+  .bloco h2 { font-size: 1.5rem; margin: 0 0 1rem; padding-bottom: .4rem; border-bottom: 1px solid var(--linha); }
+  .lista-simples { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+  .lista-simples li { padding: .6rem .8rem; background: var(--tinta-2); border-left: 2px solid var(--linha); font: 1rem var(--f-ui); }
+  .diario { list-style: none; padding: 0; margin: 0; border-left: 1px solid var(--sangue); }
+  .diario li { position: relative; padding: 0 0 1rem 1.2rem; font: .98rem/1.45 var(--f-ui); }
+  .diario li::before { content: ''; position: absolute; left: -5px; top: .45rem; width: 9px; height: 9px; background: var(--sangue-vivo); transform: rotate(45deg); }
+  .diario time { display: block; font-size: .8rem; color: var(--papel-3); }
+  .meridianos svg { width: 100%; max-width: 18rem; margin: 0 auto; }
+  .meridianos .ponto { fill: var(--tinta-4); stroke: var(--linha); }
+  .meridianos .ponto.aberto { fill: var(--sangue-vivo); stroke: #ffb3a0; filter: drop-shadow(0 0 4px #ff3b2f); }
+  .meridianos .ponto.extra.aberto { fill: var(--ouro-claro); stroke: #fff2c8; filter: drop-shadow(0 0 5px #ffd27a); }
+  .meridianos .canal { stroke: var(--linha); fill: none; stroke-width: 1.2; }
+  .acoes-dono { display: grid; gap: 1rem; }
+  .contagem-linhas { font: 700 .95rem var(--f-ui); }
+  .tabela-mini td, .tabela-mini th { padding: .45rem .6rem; font-size: .92rem; }
+  .conquista { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .7rem; border: 1px solid var(--ouro); color: var(--ouro-claro); font: 700 .85rem var(--f-ui); margin: 0 .4rem .4rem 0; }
+</style>

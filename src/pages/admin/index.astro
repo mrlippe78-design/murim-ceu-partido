@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+const abas = [
+  ['fila', 'Fila'], ['personagens', 'Personagens'], ['contas', 'Contas'], ['rolagens', 'Rolagens'], ['mural', 'Mural'],
+  ['listas', 'Listas'], ['calendario', 'Calendário'], ['estatisticas', 'Estatísticas'], ['simulador', 'Simulador'], ['destino', 'Destino 100k'], ['log', 'Histórico'],
+];
+---
+<Base titulo="Painel da administração" noindex>
+  <div class="envoltorio pagina admin">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">判</span>
+      <p class="rotulo">Salão do Juiz</p>
+      <h1>Painel da administração</h1>
+      <p class="mudo" id="aviso-admin">Verificando permissões…</p>
+    </header>
+    <div id="painel" hidden>
+      <nav class="abas-admin" role="tablist" aria-label="Seções do painel">
+        {abas.map(([k, n], i) => <button role="tab" data-aba={k} aria-selected={i === 0 ? 'true' : 'false'}>{n}</button>)}
+      </nav>
+      <section id="conteudo-aba" class="conteudo-aba" role="tabpanel" tabindex="-1"></section>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { iniciarAdmin } from '../../scripts/admin';
+  iniciarAdmin();
+</script>
+
+<style is:global>
+  .abas-admin { display: flex; gap: .3rem; overflow-x: auto; padding-bottom: .5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--linha); scrollbar-width: thin; }
+  .abas-admin button { flex: none; min-height: 2.75rem; padding: .5rem 1rem; background: var(--tinta-2); border: var(--borda); color: var(--papel-2); font: 700 .85rem var(--f-ui); letter-spacing: .06em; cursor: pointer; }
+  .abas-admin button[aria-selected='true'] { color: var(--papel); border-color: var(--sangue); background: linear-gradient(var(--tinta-2), rgba(168,18,26,.2)); }
+  .admin .cartao-fila { border: var(--borda); background: var(--tinta-2); padding: 1.2rem; margin-bottom: 1rem; }
+  .admin .cartao-fila h3 { margin: 0 0 .4rem; }
+  .admin .texto-envio { white-space: pre-wrap; max-height: 22rem; overflow: auto; background: var(--tinta); border: var(--borda); padding: 1rem; font: .98rem/1.55 var(--f-texto); }
+  .admin .grade-mini { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); margin: .8rem 0; }
+  .admin .grade-mini .campo { margin: 0; }
+  .admin .barra-h { display: flex; align-items: center; gap: .6rem; font: .92rem var(--f-ui); margin-bottom: .35rem; }
+  .admin .barra-h span:first-child { width: 11rem; flex: none; color: var(--papel-2); }
+  .admin .barra-h i { display: block; height: .8rem; background: var(--sangue-vivo); min-width: 2px; }
+  .admin .log-luta { font: .88rem/1.5 ui-monospace, Consolas, monospace; white-space: pre-wrap; max-height: 30rem; overflow: auto; background: var(--tinta); border: var(--borda); padding: 1rem; }
+  .admin .busca-admin { max-width: 26rem; margin-bottom: 1rem; }
+  .admin .lista-sel li { cursor: pointer; }
+</style>

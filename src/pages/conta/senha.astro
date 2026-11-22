@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base titulo="Nova senha" noindex>
+  <div class="estreito pagina">
+    <h1>Nova senha</h1>
+    <form id="form" class="painel">
+      <div class="campo"><label for="senha">Nova senha (mínimo 8 caracteres)</label><input id="senha" type="password" minlength="8" required autocomplete="new-password" /></div>
+      <button class="btn" type="submit">Salvar senha</button>
+    </form>
+  </div>
+</Base>
+<script>
+  import { supabase, toast, link, $ } from '../../scripts/app';
+  $('#form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const { error } = await supabase.auth.updateUser({ password: ($('#senha') as HTMLInputElement).value });
+    if (error) return toast('Link expirado ou inválido. Peça outro na tela de entrada.', true);
+    toast('Senha alterada.');
+    setTimeout(() => (location.href = link('/conta/')), 1200);
+  });
+</script>

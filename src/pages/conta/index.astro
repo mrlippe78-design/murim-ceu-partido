@@ -1,0 +1,209 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/caminhos';
+---
+<Base titulo="Minha conta" descricao="Entre, crie seus personagens e acompanhe suas fichas." noindex>
+  <div class="estreito pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">門</span>
+      <p class="rotulo">Portão da seita</p>
+      <h1 id="titulo-conta">Minha conta</h1>
+    </header>
+
+    <p id="carregando" class="mudo">Abrindo o portão…</p>
+
+    <!-- visitante -->
+    <section id="visitante" hidden>
+      <div class="abas" role="tablist" aria-label="Entrar ou criar conta">
+        <button role="tab" id="aba-entrar" aria-selected="true" aria-controls="form-entrar">Entrar</button>
+        <button role="tab" id="aba-criar" aria-selected="false" aria-controls="form-criar">Criar conta</button>
+      </div>
+      <form id="form-entrar" class="painel" role="tabpanel" aria-labelledby="aba-entrar">
+        <div class="campo"><label for="e-email">E-mail</label><input id="e-email" type="email" autocomplete="email" required /></div>
+        <div class="campo"><label for="e-senha">Senha</label><input id="e-senha" type="password" autocomplete="current-password" required minlength="8" /></div>
+        <button class="btn" type="submit">Entrar</button>
+        <p class="ajuda"><button type="button" class="link-btn" id="esqueci">Esqueci minha senha</button></p>
+      </form>
+      <form id="form-criar" class="painel" role="tabpanel" aria-labelledby="aba-criar" hidden>
+        <div class="campo"><label for="c-nome">Nome de exibição</label><input id="c-nome" required minlength="2" maxlength="40" autocomplete="nickname" /><p class="ajuda">Use o mesmo nome que aparece no seu WhatsApp, para a administração reconhecer você.</p></div>
+        <div class="campo"><label for="c-email">E-mail</label><input id="c-email" type="email" autocomplete="email" required /></div>
+        <div class="campo"><label for="c-senha">Senha (mínimo 8 caracteres)</label><input id="c-senha" type="password" autocomplete="new-password" required minlength="8" /></div>
+        <label class="check"><input type="checkbox" id="c-aceite" required /> <span>Li a <a href={url('/privacidade/')}>política de privacidade</a> e aceito as <a href={url('/biblioteca/comece/convivencia/')}>regras de convivência</a>.</span></label>
+        <button class="btn" type="submit">Criar conta</button>
+        <p class="ajuda">Não pedimos telefone, CPF nem nenhum dado sensível.</p>
+      </form>
+    </section>
+
+    <!-- logado -->
+    <section id="logado" hidden>
+      <div class="linha-flex saudacao">
+        <p>Saudações, <strong id="nome-exibicao"></strong>.</p>
+        <a id="link-admin" class="btn ouro pequeno" href={url('/admin/')} hidden>Painel da administração</a>
+        <button type="button" id="sair" class="btn fantasma pequeno">Sair</button>
+      </div>
+      <div id="aviso-quiz" class="nota" hidden>
+        Antes de criar uma ficha, faça o tutorial <a href={url('/tutorial/')}>Primeira vez aqui?</a> (5 minutos e um quiz rápido).
+      </div>
+      <div id="aviso-banido" class="lista-erros" hidden>Sua conta está suspensa. Fale com a administração.</div>
+
+      <h2 class="titulo-secao">Seus personagens</h2>
+      <ul id="lista-personagens" class="lista-personagens"></ul>
+      <form id="form-novo" class="novo-personagem" hidden>
+        <label for="novo-nome">Nome do novo personagem</label>
+        <div class="linha-flex">
+          <input id="novo-nome" required minlength="2" maxlength="60" placeholder="Ex.: Yun Seo-ah" />
+          <button class="btn" type="submit">Começar ficha</button>
+        </div>
+        <p class="ajuda" id="ajuda-novo">Até 2 personagens vivos, de facções diferentes.</p>
+      </form>
+
+      <details class="painel mais-opcoes">
+        <summary>Configurações da conta</summary>
+        <form id="form-nome" class="campo">
+          <label for="novo-exibicao">Nome de exibição</label>
+          <div class="linha-flex"><input id="novo-exibicao" minlength="2" maxlength="40" /><button class="btn pequeno" type="submit">Salvar</button></div>
+        </form>
+        <p class="ajuda">Para apagar sua conta e todos os dados, veja a <a href={url('/privacidade/')}>página de privacidade</a>.</p>
+      </details>
+    </section>
+  </div>
+</Base>
+
+<script>
+  import { supabase, perfilAtual, toast, esc, link, nomes, mensagemErro, $, param } from '../../scripts/app';
+
+  const visitante = $('#visitante'), logado = $('#logado'), carregando = $('#carregando');
+
+  function abas() {
+    const [a, b] = [$('#aba-entrar'), $('#aba-criar')];
+    const ir = (qual: 'entrar' | 'criar') => {
+      a.setAttribute('aria-selected', String(qual === 'entrar'));
+      b.setAttribute('aria-selected', String(qual === 'criar'));
+      $('#form-entrar').hidden = qual !== 'entrar';
+      $('#form-criar').hidden = qual !== 'criar';
+    };
+    a.onclick = () => ir('entrar');
+    b.onclick = () => ir('criar');
+    if (param('criar')) ir('criar');
+  }
+
+  async function aposEntrar() {
+    const voltar = param('voltar');
+    if (voltar && voltar.startsWith('/')) location.href = voltar;
+    else await mostrar();
+  }
+
+  $('#form-entrar').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const { error } = await supabase.auth.signInWithPassword({ email: ($('#e-email') as HTMLInputElement).value.trim(), password: ($('#e-senha') as HTMLInputElement).value });
+    if (error) return toast(error.message === 'Invalid login credentials' ? 'E-mail ou senha incorretos.' : error.message, true);
+    await aposEntrar();
+  });
+
+  $('#form-criar').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nome = ($('#c-nome') as HTMLInputElement).value.trim();
+    const { data, error } = await supabase.auth.signUp({
+      email: ($('#c-email') as HTMLInputElement).value.trim(),
+      password: ($('#c-senha') as HTMLInputElement).value,
+      options: { data: { nome_exibicao: nome }, emailRedirectTo: location.origin + link('/conta/') },
+    });
+    if (error) return toast(error.message.includes('registered') ? 'Este e-mail já tem conta. Use "Entrar".' : error.message, true);
+    if (!data.session) return toast('Conta criada. Confirme pelo link enviado ao seu e-mail e depois entre.');
+    toast('Conta criada. Bem-vindo ao Jianghu.');
+    await aposEntrar();
+  });
+
+  $('#esqueci').addEventListener('click', async () => {
+    const email = ($('#e-email') as HTMLInputElement).value.trim();
+    if (!email) return toast('Digite seu e-mail no campo acima primeiro.', true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: location.origin + link('/conta/senha/') });
+    toast(error ? error.message : 'Se o e-mail existir, um link de troca de senha foi enviado.', !!error);
+  });
+
+  $('#sair').addEventListener('click', async () => { await supabase.auth.signOut(); location.reload(); });
+
+  $('#form-nome').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const p = await perfilAtual();
+    const nome = ($('#novo-exibicao') as HTMLInputElement).value.trim();
+    const { error } = await supabase.from('perfis').update({ nome_exibicao: nome }).eq('id', p!.id);
+    if (error) return toast(mensagemErro(error), true);
+    $('#nome-exibicao').textContent = nome;
+    toast('Nome atualizado.');
+  });
+
+  $('#form-novo').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const nome = ($('#novo-nome') as HTMLInputElement).value.trim();
+    const { data, error } = await supabase.rpc('criar_personagem', { p_nome: nome });
+    if (error) return toast(mensagemErro(error), true);
+    location.href = link(`/conta/ficha/?id=${data}`);
+  });
+
+  async function mostrar() {
+    const p = await perfilAtual();
+    carregando.hidden = true;
+    if (!p) { visitante.hidden = false; logado.hidden = true; abas(); return; }
+    visitante.hidden = true; logado.hidden = false;
+    $('#nome-exibicao').textContent = p.nome_exibicao;
+    ($('#novo-exibicao') as HTMLInputElement).value = p.nome_exibicao;
+    $('#link-admin').hidden = p.papel !== 'admin';
+    $('#aviso-quiz').hidden = p.quiz_aprovado;
+    $('#aviso-banido').hidden = !p.banido;
+
+    const { data: lista } = await supabase.from('personagens')
+      .select('id, nome, alcunha, status, reino, estagio, pe, corpo, faccao, ficha, vivo, leituras, motivo_recusa')
+      .eq('dono', p.id).is('excluido_em', null).order('criado_em');
+    const ul = $('#lista-personagens');
+    ul.innerHTML = (lista ?? []).map((c) => {
+      const rar = nomes.raridadeCorpo(c.corpo);
+      const href = c.status === 'aprovada' ? link(`/personagem/?id=${c.id}`) : link(`/conta/ficha/?id=${c.id}`);
+      return `<li class="cartao-p ${c.vivo ? '' : 'morto'}">
+        <a href="${href}">
+          <span class="cp-ideograma" aria-hidden="true">${esc((c.faccao ?? c.ficha?.faccao) ? '武' : '人')}</span>
+          <span class="cp-nome">${esc(c.nome)}${c.alcunha ? ` <em>“${esc(c.alcunha)}”</em>` : ''}</span>
+          <span class="cp-info">${esc(nomes.reino(c.reino))} ${esc(nomes.estagio(c.estagio))} · ${esc(nomes.seita(c.ficha?.seita))}</span>
+          <span class="cp-info r-${rar}"><span class="raridade">${esc(nomes.corpo(c.corpo))}</span></span>
+          <span class="selo-status st-${c.status}">${c.vivo ? esc(nomes.status(c.status)) : 'Morto'}</span>
+          ${c.leituras > 0 ? `<span class="tem-leitura">${c.leituras} Leitura${c.leituras > 1 ? 's' : ''} do Destino</span>` : ''}
+        </a>
+      </li>`;
+    }).join('') || '<li class="mudo">Nenhum personagem ainda.</li>';
+
+    const vivos = (lista ?? []).filter((c) => c.vivo).length;
+    const podeCriar = p.quiz_aprovado && !p.banido && vivos < 2;
+    $('#form-novo').hidden = !podeCriar;
+    if (p.ultima_exclusao_em && Date.now() - new Date(p.ultima_exclusao_em).getTime() < 30 * 864e5)
+      $('#ajuda-novo').textContent = 'Você apagou um personagem há menos de 30 dias: o próximo só recebe a Leitura de criação quando o prazo acabar.';
+  }
+
+  supabase.auth.onAuthStateChange((evento) => { if (evento === 'SIGNED_OUT') location.reload(); });
+  mostrar();
+</script>
+
+<style>
+  .abas { display: flex; gap: .2rem; margin-bottom: -1px; }
+  .abas button { flex: 1; min-height: 3rem; background: var(--tinta); color: var(--papel-2); border: var(--borda); border-bottom: 0; font: 700 .9rem var(--f-ui); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+  .abas button[aria-selected='true'] { background: var(--tinta-2); color: var(--papel); box-shadow: inset 0 2px 0 var(--sangue-vivo); }
+  .check { display: flex; gap: .6rem; align-items: flex-start; margin: 1rem 0 1.3rem; color: var(--papel-2); }
+  .check input { margin-top: .2rem; flex: none; }
+  .link-btn { background: none; border: 0; color: var(--papel-2); text-decoration: underline; cursor: pointer; font: inherit; padding: .5rem 0; }
+  .saudacao { justify-content: space-between; margin-bottom: 1rem; }
+  .saudacao p { margin: 0; flex: 1; font-size: 1.2rem; }
+  .titulo-secao { margin-top: 2rem; }
+  .lista-personagens { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: 1rem; }
+  .cartao-p a { position: relative; display: grid; gap: .2rem; padding: 1.2rem 1.2rem 1.2rem 5rem; border: var(--borda); background: var(--tinta-2); text-decoration: none; overflow: hidden; }
+  .cartao-p a:hover { border-color: var(--sangue); }
+  .cartao-p.morto { opacity: .55; filter: grayscale(1); }
+  .cp-ideograma { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font: 400 2.8rem/1 var(--f-display); color: var(--sangue-vivo); }
+  .cp-nome { font: 400 1.5rem var(--f-display); }
+  .cp-nome em { color: var(--ouro-claro); font-size: 1rem; }
+  .cp-info { font: .95rem var(--f-ui); color: var(--papel-2); }
+  .selo-status { position: absolute; right: 1rem; top: 1rem; font: 700 .7rem var(--f-ui); letter-spacing: .14em; text-transform: uppercase; padding: .3rem .5rem; border: 1px solid currentColor; }
+  .st-aprovada { color: var(--jade); } .st-aguardando { color: var(--ouro); } .st-recusada { color: var(--sangue-texto); } .st-rascunho { color: var(--papel-3); }
+  .tem-leitura { font: 700 .85rem var(--f-ui); color: var(--r-lendario); }
+  .novo-personagem { margin-bottom: 2rem; }
+  .novo-personagem .linha-flex input { flex: 1; min-width: 12rem; }
+  .mais-opcoes summary { cursor: pointer; font: 700 1rem var(--f-ui); min-height: 2.75rem; }
+</style>

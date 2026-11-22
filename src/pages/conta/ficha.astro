@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/caminhos';
+const passos = ['Linhagem', 'Origem', 'Facção', 'Talentos', 'Atributos', 'Artes', 'Destino', 'Ficha final'];
+---
+<Base titulo="Criador de ficha" noindex>
+  <div class="envoltorio pagina criador">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">命</span>
+      <p class="rotulo"><a href={url('/conta/')}>Minha conta</a> · Criador de ficha</p>
+      <h1 id="nome-personagem">…</h1>
+      <p class="estado-salvo" aria-live="polite"><span id="salvo">Carregando rascunho…</span></p>
+    </header>
+
+    <nav class="passos" aria-label="Passos da criação">
+      <ol>
+        {passos.map((p, i) => (
+          <li><button type="button" data-passo={i} aria-current={i === 0 ? 'step' : undefined}><span class="n">{i + 1}</span><span class="t">{p}</span></button></li>
+        ))}
+      </ol>
+    </nav>
+
+    <div class="criador-grade">
+      <div id="palco" class="palco" tabindex="-1"></div>
+      <aside class="resumo-lateral painel" aria-label="Resumo da ficha">
+        <p class="rotulo ouro">Resumo</p>
+        <dl id="resumo"></dl>
+        <div id="erros-lateral" class="lista-erros"></div>
+      </aside>
+    </div>
+
+    <div class="navegacao-passos">
+      <button type="button" class="btn fantasma" id="anterior">← Anterior</button>
+      <button type="button" class="btn" id="proximo">Próximo →</button>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { iniciarCriador } from '../../scripts/criador';
+  iniciarCriador();
+</script>
+
+<style>
+  .criador .cabeca-pagina { padding-bottom: .5rem; }
+  .criador .cabeca-pagina a { color: inherit; text-decoration: none; }
+  .estado-salvo { font: .9rem var(--f-ui); color: var(--papel-3); }
+  .passos { overflow-x: auto; margin: 0 -1.25rem 1.5rem; padding: 0 1.25rem; scrollbar-width: none; }
+  .passos ol { display: flex; gap: .3rem; list-style: none; margin: 0; padding: 0; min-width: max-content; }
+  .passos button { display: flex; align-items: center; gap: .5rem; min-height: 2.9rem; padding: .4rem .9rem .4rem .5rem; background: var(--tinta-2); border: var(--borda); color: var(--papel-3); font: 500 .92rem var(--f-ui); cursor: pointer; }
+  .passos .n { display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border: 1px solid var(--linha); font-weight: 700; }
+  .passos button[aria-current='step'] { color: var(--papel); border-color: var(--sangue); }
+  .passos button[aria-current='step'] .n { background: var(--sangue); border-color: var(--sangue); color: #fff; }
+  .passos button.feito .n { border-color: var(--jade); color: var(--jade); }
+  .criador-grade { display: grid; gap: 1.5rem; }
+  @media (min-width: 1000px) { .criador-grade { grid-template-columns: minmax(0, 1fr) 19rem; align-items: start; } .resumo-lateral { position: sticky; top: calc(var(--topo) + 1rem); } }
+  .resumo-lateral dl { display: grid; grid-template-columns: auto 1fr; gap: .3rem .8rem; font: .92rem var(--f-ui); margin: .6rem 0; }
+  .resumo-lateral dt { color: var(--papel-3); }
+  .resumo-lateral dd { margin: 0; text-align: right; }
+  .palco:focus { outline: none; }
+  .navegacao-passos { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+</style>
+
+<style is:global>
+  .opcoes { display: grid; gap: .8rem; }
+  @media (min-width: 700px) { .opcoes.duas { grid-template-columns: 1fr 1fr; } }
+  .opcao { position: relative; display: block; padding: 1rem 1rem 1rem 3rem; border: var(--borda); background: var(--tinta-2); cursor: pointer; margin: 0; color: var(--papel); }
+  .opcao input { position: absolute; left: 1rem; top: 1.15rem; }
+  .opcao:has(input:checked) { border-color: var(--sangue-vivo); background: linear-gradient(90deg, rgba(168,18,26,.14), var(--tinta-2)); }
+  .opcao:has(input:disabled) { opacity: .45; cursor: not-allowed; }
+  .opcao strong { display: block; font: 400 1.2rem var(--f-display); color: var(--papel); margin-bottom: .2rem; }
+  .opcao .det { display: block; font: .95rem/1.45 var(--f-ui); color: var(--papel-2); }
+  .opcao .custo { position: absolute; right: 1rem; top: 1rem; font: 700 .85rem var(--f-ui); color: var(--ouro); }
+  .contador { display: flex; gap: 1.5rem; flex-wrap: wrap; padding: 1rem; border: var(--borda); background: var(--tinta-2); margin-bottom: 1.2rem; font: 1rem var(--f-ui); position: sticky; top: var(--topo); z-index: 5; }
+  .contador strong { font-size: 1.4rem; display: block; }
+  .attr-linha { display: grid; grid-template-columns: 1fr auto; gap: .4rem 1rem; align-items: center; padding: .9rem 0; border-bottom: 1px solid var(--linha); }
+  .attr-linha label { margin: 0; font: 400 1.2rem var(--f-display); color: var(--papel); }
+  .attr-ctrl { display: flex; align-items: center; gap: .3rem; }
+  .attr-ctrl input[type='number'] { width: 6.2rem; text-align: center; }
+  .attr-ctrl button { width: 2.9rem; height: 3rem; background: var(--tinta-3); border: var(--borda); color: var(--papel); font: 700 1.2rem var(--f-ui); cursor: pointer; }
+  .attr-linha input[type='range'] { grid-column: 1 / -1; width: 100%; accent-color: var(--sangue-vivo); min-height: 0; padding: 0; border: 0; background: none; }
+  .attr-linha .final { grid-column: 1 / -1; font: .9rem var(--f-ui); color: var(--papel-3); }
+  .tecnica-bloco { border: var(--borda); padding: 1.2rem; margin-bottom: 1.2rem; background: var(--tinta-2); }
+  .tecnica-bloco h3 { margin-top: 0; }
+  .barra { height: .5rem; background: var(--tinta-4); margin: .6rem 0; position: relative; overflow: hidden; }
+  .barra span { position: absolute; inset: 0 auto 0 0; background: var(--jade); transition: width .2s; }
+  .barra.estourou span { background: var(--sangue-vivo); }
+  .grade-campos { display: grid; gap: .8rem; }
+  @media (min-width: 700px) { .grade-campos { grid-template-columns: repeat(3, 1fr); } .grade-campos.cinco { grid-template-columns: repeat(5, 1fr); } }
+  .texto-pronto { white-space: pre-wrap; font: .95rem/1.5 ui-monospace, Consolas, monospace; background: var(--tinta); border: var(--borda); padding: 1rem; max-height: 28rem; overflow: auto; }
+  .resultado-destino { display: grid; gap: .8rem; }
+  .resultado-destino .painel { display: flex; justify-content: space-between; gap: 1rem; align-items: center; flex-wrap: wrap; }
+</style>
