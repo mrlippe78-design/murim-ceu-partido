@@ -24,11 +24,20 @@ update public.perfis set papel = 'admin'
 
 > Eu não pude rodar esse comando por você: a inserção do seu e-mail foi bloqueada pelo filtro de segurança da sessão.
 
+## Atualização: reinos, treino e seitas (22/11)
+
+- **10 reinos:** Vida e Morte passou a ser alcançado por PE (185.000), e entraram o **Reino Natural** (310.000) e a **Harmonia Celeste** (510.000). O Imortal Marcial continua só por evento.
+- **Treino mínimo: 20 linhas** (era 80), no site, no servidor (migração 0006) e nos modelos de mensagem.
+- **História** em todas as 21 seitas, mais 2 seitas novas: **Convento da Lótus de Jade** (Aliança) e **Clã Geum** (Clãs Nobres).
+- **Pesquisa do gênero** em `docs/pesquisa-murim.md`, com fontes e um mapa do que foi adaptado. Nomes, seitas e personagens continuam originais.
+- **Páginas novas:** O gênero murim, Caminho da arma, Respiração e reclusão, Hierarquia e costumes e Títulos do Jianghu.
+- A função `jogo` do servidor foi republicada (versão 3) com os dados novos.
+
 ## O que foi verificado (executado de verdade)
 
 | Verificação | Resultado |
 |---|---|
-| Testes das regras, do sorteio e do combate (Vitest) | **31/31** |
+| Testes das regras, do sorteio e do combate (Vitest) | **32/32** (inclui a progressão até a Harmonia Celeste) |
 | 100.000 Leituras de corpo (teste local, gerador criptográfico) | dentro de 5 desvios-padrão em todas as raridades |
 | Testes no navegador, 390 px e 1440 px (Playwright) | **30/30** no build local; **24/24** públicos e de segurança no site publicado |
 | Cadastro → quiz → ficha → Leitura do Destino → envio para aprovação | passou |
