@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+assets-originais/*.jpg
+.agents/
+.claude/
+test-results/
+playwright-report/
+evidencias/tmp/
+*.log
+skills-lock.json

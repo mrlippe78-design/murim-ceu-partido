@@ -1,0 +1,33 @@
+{
+  "name": "murim-ceu-partido",
+  "version": "1.0.0",
+  "description": "Site oficial do RPG de WhatsApp Murim: Céu Partido",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && pagefind --site dist --force-language pt",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "imagens": "node scripts/otimizar-imagens.mjs",
+    "og": "node scripts/gerar-og.mjs",
+    "e2e": "playwright test"
+  },
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "lighthouse": "^13.6.0",
+    "pagefind": "^1.6.0",
+    "sharp": "^0.35.5",
+    "supabase": "^3.2.0",
+    "vitest": "^5.1.1"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.10",
+    "@fontsource/alegreya": "^5.3.0",
+    "@fontsource/alegreya-sans": "^5.3.0",
+    "@fontsource/zen-antique": "^5.3.1",
+    "@supabase/supabase-js": "^2.119.2",
+    "astro": "^7.4.13"
+  },
+  "private": true
+}
