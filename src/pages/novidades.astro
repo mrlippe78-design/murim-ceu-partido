@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/caminhos';
+import novidades from '../data/novidades.json';
+---
+<Base titulo="Mudanças nas regras" descricao="Histórico de atualizações das regras: data, o que mudou e por quê.">
+  <div class="estreito pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">新</span>
+      <p class="rotulo">Registro do Salão</p>
+      <h1>Mudanças nas regras</h1>
+      <p class="lead">Toda alteração de regra entra aqui, com data e motivo. Quando há regra nova, aparece um aviso no topo do site.</p>
+    </header>
+    <ol class="mudancas">
+      {novidades.map((n) => (
+        <li>
+          <time datetime={n.data}>{new Date(n.data + 'T12:00:00').toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}</time>
+          <h2>{n.titulo}</h2>
+          <p><strong>O que mudou:</strong> {n.mudou}</p>
+          <p><strong>Por quê:</strong> {n.porque}</p>
+          {n.paginas?.length > 0 && <p class="mudo">Páginas: {n.paginas.map((p, i) => <>{i > 0 && ' · '}<a href={url(`/biblioteca/${p}/`)}>{p}</a></>)}</p>}
+        </li>
+      ))}
+    </ol>
+  </div>
+</Base>
+<style>
+  .mudancas { list-style: none; padding: 0; margin: 0; border-left: 1px solid var(--sangue); }
+  .mudancas li { position: relative; padding: 0 0 2rem 1.5rem; }
+  .mudancas li::before { content: ''; position: absolute; left: -6px; top: .4rem; width: 11px; height: 11px; background: var(--sangue-vivo); transform: rotate(45deg); }
+  .mudancas time { font: 700 .85rem var(--f-ui); color: var(--ouro); letter-spacing: .1em; text-transform: uppercase; }
+  .mudancas h2 { margin: .3rem 0 .6rem; font-size: 1.6rem; }
+</style>

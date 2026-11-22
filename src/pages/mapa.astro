@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import regioes from '../data/mapa.json';
+---
+<Base titulo="Mapa das Planícies Centrais" descricao="Mapa interativo: regiões, facções, perigos e os personagens dos players que estão em cada lugar.">
+  <div class="envoltorio pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">圖</span>
+      <p class="rotulo">Planícies Centrais · Ano 31</p>
+      <h1>Mapa</h1>
+      <p class="lead">Toque numa região para ver quem manda, o que mata e quais players estão por lá.</p>
+    </header>
+    <div class="mapa-grade">
+      <figure class="mapa">
+        <svg viewBox="0 0 1000 700" role="group" aria-label="Mapa das Planícies Centrais">
+          <defs>
+            <pattern id="hachura" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line x1="0" y1="0" x2="0" y2="8" stroke="#3b2f28" stroke-width="1" /></pattern>
+            <filter id="tinta"><feTurbulence baseFrequency=".04" numOctaves="2" seed="7" /><feDisplacementMap in="SourceGraphic" scale="5" /></filter>
+          </defs>
+          <rect width="1000" height="700" fill="#110d0b" />
+          <path d="M960 40 Q990 300 960 560 L1000 700 L1000 0 Z" fill="url(#hachura)" opacity=".8" />
+          <text x="975" y="380" class="mar" transform="rotate(90 975 380)">MAR DO LESTE</text>
+          {regioes.map((r) => (
+            <g class="regiao" data-regiao={r.chave} tabindex="0" role="button" aria-label={`${r.nome}: ver detalhes`}>
+              <path d={r.caminho} filter="url(#tinta)" />
+              <text x={r.x} y={r.y} class="ideo" text-anchor="middle">{r.ideograma}</text>
+              <text x={r.x} y={r.y + 36} class="nome" text-anchor="middle">{r.nome}</text>
+              <text x={r.x} y={r.y + 58} class="players" text-anchor="middle" data-contagem={r.chave}></text>
+            </g>
+          ))}
+          <path class="rio" d="M330 300 C380 420 420 470 470 520 S560 600 640 640" />
+          <path class="rio" d="M470 410 C520 470 560 520 610 560 S700 600 760 640" />
+          <path class="rio" d="M600 380 C640 440 690 470 740 520" />
+          <g class="montes">{[[420, 260], [470, 240], [520, 265], [560, 230], [380, 250]].map(([x, y]) => <path d={`M${x - 16} ${y + 14} L${x} ${y - 10} L${x + 16} ${y + 14}`} />)}</g>
+          <circle cx="680" cy="380" r="7" class="capital" /><text x="694" y="372" class="cidade">Cheonggyeong</text>
+          <path d="M100 680 L210 680" stroke="#bf9a5b" stroke-width="2" /><text x="100" y="672" class="escala">100 li</text>
+        </svg>
+      </figure>
+      <aside class="painel ficha-regiao" id="ficha-regiao" aria-live="polite">
+        <p class="mudo">Escolha uma região no mapa.</p>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import regioes from '../data/mapa.json';
+  import { supabase, esc, link } from '../scripts/app';
+  let players: { id: string; nome: string; alcunha: string | null; regiao: string | null }[] = [];
+  function mostrar(k: string) {
+    const r = regioes.find((x) => x.chave === k)!;
+    document.querySelectorAll('.regiao').forEach((g) => g.classList.toggle('ativa', (g as HTMLElement).dataset.regiao === k));
+    const aqui = players.filter((p) => p.regiao === r.nome);
+    document.getElementById('ficha-regiao')!.innerHTML = `
+      <p class="rotulo">${esc(r.ideograma)} · Região</p><h2 style="margin-top:.2rem">${esc(r.nome)}</h2><p>${esc(r.texto)}</p>
+      <p><strong>Facções:</strong> ${esc(r.faccoes)}</p><p><strong>Perigos:</strong> ${esc(r.perigos)}</p><p><strong>Lugares:</strong> ${esc(r.lugares)}</p>
+      <h3>Players aqui (${aqui.length})</h3>
+      <ul class="lista-simples">${aqui.map((p) => `<li><a href="${link(`/personagem/?id=${p.id}`)}">${esc(p.nome)}</a>${p.alcunha ? ` <em class="mudo">“${esc(p.alcunha)}”</em>` : ''}</li>`).join('') || '<li class="mudo">Ninguém por enquanto.</li>'}</ul>
+      <p style="margin-top:1rem"><a href="${link('/biblioteca/mundo/regioes/')}">Ler mais sobre as regiões</a></p>`;
+  }
+  document.querySelectorAll<SVGGElement>('.regiao').forEach((g) => {
+    g.addEventListener('click', () => mostrar(g.dataset.regiao!));
+    g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); mostrar(g.dataset.regiao!); } });
+  });
+  supabase.from('personagens').select('id, nome, alcunha, regiao').eq('status', 'aprovada').eq('vivo', true).is('excluido_em', null).then(({ data }) => {
+    players = data ?? [];
+    for (const r of regioes) {
+      const n = players.filter((p) => p.regiao === r.nome).length;
+      const t = document.querySelector(`[data-contagem="${r.chave}"]`);
+      if (t) t.textContent = n ? `${n} player${n > 1 ? 's' : ''}` : '';
+    }
+  });
+</script>
+
+<style>
+  .mapa-grade { display: grid; gap: 1.5rem; }
+  @media (min-width: 1000px) { .mapa-grade { grid-template-columns: 1.6fr 1fr; align-items: start; } .ficha-regiao { position: sticky; top: calc(var(--topo) + 1rem); } }
+  .mapa { margin: 0; border: var(--borda); }
+  .mapa svg { width: 100%; height: auto; }
+  .regiao { cursor: pointer; outline: none; }
+  .regiao path { fill: #1a1310; stroke: #6b5124; stroke-width: 2; transition: fill .25s; }
+  .regiao:hover path, .regiao:focus-visible path { fill: #2a1813; }
+  .regiao.ativa path { fill: #3a1212; stroke: #d3262c; stroke-width: 3; }
+  .regiao:focus-visible path { stroke: #e2c58b; stroke-width: 3; }
+  .ideo { font: 400 46px 'Zen Antique', serif; fill: #a8121a; opacity: .85; pointer-events: none; }
+  .nome { font: 700 17px 'Alegreya Sans', sans-serif; fill: #ece2cf; letter-spacing: .08em; pointer-events: none; }
+  .players { font: 700 14px 'Alegreya Sans', sans-serif; fill: #e0ac45; pointer-events: none; }
+  .rio { fill: none; stroke: #4a6a8a; stroke-width: 2.5; opacity: .7; pointer-events: none; }
+  .montes path { fill: none; stroke: #8a7a62; stroke-width: 2; }
+  .capital { fill: #d3262c; stroke: #fff3dd; stroke-width: 2; }
+  .cidade, .escala { font: 500 14px 'Alegreya Sans', sans-serif; fill: #bfb19a; }
+  .mar { font: 700 14px 'Alegreya Sans', sans-serif; fill: #6b5f52; letter-spacing: .4em; }
+</style>

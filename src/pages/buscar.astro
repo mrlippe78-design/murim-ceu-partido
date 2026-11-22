@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base titulo="Buscar" descricao="Busque qualquer regra, seita, técnica ou lugar na biblioteca.">
+  <div class="estreito pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">尋</span>
+      <p class="rotulo">Pavilhão de Escrituras</p>
+      <h1>Buscar</h1>
+    </header>
+    <form id="form-busca" role="search" onsubmit="return false">
+      <label for="q" class="sr">Termo de busca</label>
+      <input id="q" type="search" autocomplete="off" placeholder="Ex.: Desvio de Qi, Pavilhão Sem Rosto, gargalo…" autofocus />
+    </form>
+    <p id="estado" class="mudo" aria-live="polite"></p>
+    <ol id="resultados" class="resultados"></ol>
+  </div>
+</Base>
+<script>
+  const base = (document.body.dataset.base ?? '/').replace(/\/?$/, '/');
+  const entrada = document.getElementById('q') as HTMLInputElement;
+  const estado = document.getElementById('estado')!;
+  const lista = document.getElementById('resultados')!;
+  let pagefind: any = null;
+  async function carregar() {
+    if (pagefind) return pagefind;
+    try {
+      const caminho = `${base}pagefind/pagefind.js`;
+      pagefind = await import(/* @vite-ignore */ caminho);
+      await pagefind.options({ excerptLength: 22 });
+      return pagefind;
+    } catch {
+      estado.textContent = 'A busca é gerada na publicação do site (npm run build). No modo de desenvolvimento ela não existe.';
+      return null;
+    }
+  }
+  let timer: ReturnType<typeof setTimeout>;
+  async function buscar() {
+    const termo = entrada.value.trim();
+    history.replaceState(null, '', termo ? `?q=${encodeURIComponent(termo)}` : location.pathname);
+    if (termo.length < 2) { lista.innerHTML = ''; estado.textContent = ''; return; }
+    const pf = await carregar();
+    if (!pf) return;
+    const r = await pf.debouncedSearch(termo);
+    if (!r) return;
+    const dados = await Promise.all(r.results.slice(0, 15).map((x: any) => x.data()));
+    estado.textContent = `${r.results.length} resultado${r.results.length === 1 ? '' : 's'} para “${termo}”`;
+    lista.innerHTML = dados.map((d: any) => `<li><a href="${d.url}"><span class="r-titulo">${d.meta?.title?.replace(/ · Murim.*$/, '') ?? d.url}</span><span class="r-trecho">${d.excerpt}</span></a></li>`).join('');
+  }
+  entrada.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(buscar, 120); });
+  const q = new URLSearchParams(location.search).get('q');
+  if (q) { entrada.value = q; buscar(); }
+</script>
+<style is:global>
+  #form-busca input { font-size: 1.25rem; min-height: 3.5rem; }
+  .resultados { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+  .resultados li { border-bottom: 1px solid var(--linha); }
+  .resultados a { display: grid; gap: .3rem; padding: 1rem 0; text-decoration: none; }
+  .r-titulo { font: 400 1.35rem var(--f-display); }
+  .r-trecho { font: 1rem/1.5 var(--f-ui); color: var(--papel-2); }
+  .r-trecho mark { background: rgba(211,38,44,.35); color: var(--papel); padding: 0 .1em; }
+  .resultados a:hover .r-titulo { color: var(--sangue-texto); }
+</style>

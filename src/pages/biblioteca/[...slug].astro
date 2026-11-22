@@ -1,0 +1,15 @@
+---
+import { render } from 'astro:content';
+import Biblioteca from '../../layouts/Biblioteca.astro';
+import { paginasOrdenadas } from '../../lib/biblioteca';
+
+export async function getStaticPaths() {
+  const paginas = await paginasOrdenadas();
+  return paginas.map((pagina) => ({ params: { slug: pagina.id }, props: { pagina } }));
+}
+const { pagina } = Astro.props;
+const { Content, headings } = await render(pagina);
+---
+<Biblioteca pagina={pagina} headings={headings}>
+  <Content />
+</Biblioteca>

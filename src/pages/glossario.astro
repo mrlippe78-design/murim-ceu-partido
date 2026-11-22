@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import glossario from '../data/glossario.json';
+const ordenado = [...glossario].sort((a, b) => a.termo.localeCompare(b.termo, 'pt-BR'));
+---
+<Base titulo="Glossário" descricao="Qi, dantian, gargalo, Jianghu e o resto do vocabulário de Murim: Céu Partido.">
+  <div class="estreito pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">詞</span>
+      <p class="rotulo">Vocabulário</p>
+      <h1>Glossário</h1>
+      <p class="lead">Nas páginas da biblioteca, termos sublinhados em pontinhos mostram a explicação ao tocar.</p>
+    </header>
+    <dl class="glossario" data-pagefind-body>
+      {ordenado.map((g) => (<div id={g.termo.toLowerCase().normalize('NFD').replace(/[^\w]+/g, '-')}><dt>{g.termo}</dt><dd>{g.def}</dd></div>))}
+    </dl>
+  </div>
+</Base>
+<style>
+  .glossario div { padding: 1rem 0; border-bottom: 1px solid var(--linha); }
+  .glossario dt { font: 400 1.4rem var(--f-display); color: var(--papel); }
+  .glossario dd { margin: .3rem 0 0; color: var(--papel-2); }
+</style>

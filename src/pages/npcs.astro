@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import npcs from '../data/npcs.json';
+const status = ['todos', 'vivo', 'desaparecido', 'desconhecido', 'morto'];
+---
+<Base titulo="NPCs do Jianghu" descricao="Quem manda, quem trai, quem está desaparecido: os personagens da administração em Murim: Céu Partido.">
+  <div class="envoltorio pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">眾</span>
+      <p class="rotulo">Wiki</p>
+      <h1>NPCs do Jianghu</h1>
+      <p class="lead">As figuras que movem o mundo. A administração atualiza o status conforme a história anda.</p>
+    </header>
+    <div class="filtros linha-flex" role="group" aria-label="Filtrar por status">
+      {status.map((s, i) => <button class="btn fantasma pequeno" data-filtro={s} aria-pressed={i === 0 ? 'true' : 'false'}>{s}</button>)}
+    </div>
+    <ul class="npcs">
+      {npcs.map((n) => (
+        <li data-status={n.status}>
+          <h2>{n.nome}{n.alcunha && <em>, {n.alcunha}</em>}</h2>
+          <p class="meta"><span class={`st st-${n.status}`}>{n.status}</span> · {n.reino} · {n.faccao} · {n.regiao}</p>
+          <p>{n.texto}</p>
+          <p class="rel">Relação com os players: <strong>{n.relacao}</strong></p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-filtro]').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-filtro]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    document.querySelectorAll<HTMLElement>('.npcs li').forEach((li) => (li.hidden = b.dataset.filtro !== 'todos' && li.dataset.status !== b.dataset.filtro));
+  }));
+</script>
+<style>
+  .filtros { margin-bottom: 1.5rem; }
+  .filtros [aria-pressed='true'] { box-shadow: inset 0 0 0 1px var(--sangue-vivo); color: var(--papel); }
+  .npcs { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
+  @media (min-width: 900px) { .npcs { grid-template-columns: 1fr 1fr; column-gap: 3rem; } }
+  .npcs li { padding: 1.2rem 0; border-top: 1px solid var(--linha); }
+  .npcs h2 { font-size: 1.45rem; margin: 0 0 .3rem; }
+  .npcs h2 em { color: var(--ouro-claro); font-style: italic; font-family: var(--f-texto); font-size: 1.05rem; }
+  .meta { font: .9rem var(--f-ui); color: var(--papel-3); margin-bottom: .5rem; }
+  .st { font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+  .st-vivo { color: var(--jade); } .st-desaparecido { color: var(--ouro); } .st-morto { color: var(--sangue-texto); } .st-desconhecido { color: var(--papel-2); }
+  .rel { font: .92rem var(--f-ui); color: var(--papel-2); margin: 0; }
+</style>

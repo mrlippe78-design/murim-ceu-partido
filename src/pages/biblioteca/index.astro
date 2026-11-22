@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/caminhos';
+import { arvore, hrefPagina } from '../../lib/biblioteca';
+const secoes = await arvore();
+---
+<Base titulo="Biblioteca da Seita" descricao="Todas as regras, a lore, as seitas e os sistemas de Murim: Céu Partido, organizados como os pergaminhos de uma biblioteca.">
+  <div class="envoltorio pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">藏</span>
+      <p class="rotulo">Pavilhão de Escrituras</p>
+      <h1>Biblioteca da Seita</h1>
+      <p class="lead">Tudo o que um discípulo precisa saber, e um pouco do que preferiria não saber. Use a busca para ir direto a uma regra.</p>
+      <form class="busca-rapida" action={url('/buscar/')} role="search">
+        <label for="q" class="sr">Buscar na biblioteca</label>
+        <input id="q" name="q" type="search" placeholder="Ex.: Desvio de Qi, Pavilhão Sem Rosto, gargalo…" />
+        <button class="btn" type="submit">Buscar</button>
+      </form>
+      <p class="offline-linha"><button class="btn fantasma pequeno" id="baixar-offline" hidden>Guardar a biblioteca para ler sem internet</button> <span id="offline-estado" class="ajuda" aria-live="polite"></span></p>
+    </header>
+    <div class="estantes">
+      {secoes.map((s, i) => (
+        <section class="estante" style={`--i:${i}`}>
+          <span class="estante-ideograma" aria-hidden="true">{s.ideograma}</span>
+          <h2>{s.nome}</h2>
+          <ol>
+            {s.paginas.map((p) => (
+              <li><a href={url(hrefPagina(p))}><span class="titulo-p">{p.data.titulo}</span><span class="resumo-p">{p.data.resumo}</span></a></li>
+            ))}
+          </ol>
+        </section>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<script>
+  const botao = document.getElementById('baixar-offline') as HTMLButtonElement;
+  const estado = document.getElementById('offline-estado')!;
+  if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+    navigator.serviceWorker.ready.then((reg) => {
+      botao.hidden = false;
+      botao.onclick = () => { estado.textContent = 'Copiando os pergaminhos…'; reg.active?.postMessage({ tipo: 'baixar-biblioteca' }); };
+      navigator.serviceWorker.addEventListener('message', (e) => {
+        if (e.data?.tipo === 'progresso') estado.textContent = e.data.feitos === e.data.total ? `Pronto: ${e.data.total} páginas guardadas no aparelho.` : `${e.data.feitos} de ${e.data.total} páginas…`;
+      });
+    });
+  }
+</script>
+
+<style>
+  .offline-linha { margin-top: 1rem; }
+  .busca-rapida { display: flex; gap: .5rem; max-width: 36rem; margin-top: 1.5rem; }
+  .estantes { display: grid; gap: 3rem 4rem; }
+  @media (min-width: 900px) { .estantes { grid-template-columns: 1fr 1fr; } .estante:nth-child(even) { margin-top: 4rem; } }
+  .estante { position: relative; padding-top: 1rem; border-top: 2px solid var(--sangue); }
+  .estante-ideograma { position: absolute; right: 0; top: .6rem; font: 400 3.4rem/1 var(--f-display); color: var(--sangue); opacity: .55; }
+  .estante h2 { margin: 0 0 1rem; padding-right: 4rem; }
+  .estante ol { list-style: none; margin: 0; padding: 0; counter-reset: c; }
+  .estante li { counter-increment: c; border-bottom: 1px solid var(--linha); }
+  .estante a { display: grid; grid-template-columns: 2.2rem 1fr; padding: .75rem 0; text-decoration: none; }
+  .estante a::before { content: counter(c, cjk-ideographic); font: 400 1rem var(--f-display); color: var(--ouro); grid-row: span 2; padding-top: .15rem; }
+  .titulo-p { font: 400 1.2rem var(--f-display); }
+  .resumo-p { font: .92rem/1.4 var(--f-ui); color: var(--papel-3); }
+  .estante a:hover .titulo-p { color: var(--sangue-texto); }
+</style>

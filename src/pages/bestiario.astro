@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/caminhos';
+import bestas from '../data/bestiario.json';
+---
+<Base titulo="Bestiário" descricao="Bestas espirituais das Planícies Centrais: reino, região, perigo, se podem ser domadas e o que rendem.">
+  <div class="envoltorio pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">獸</span>
+      <p class="rotulo">Wiki</p>
+      <h1>Bestiário</h1>
+      <p class="lead">Animais que beberam Qi por séculos. Regras de caça e doma em <a href={url('/biblioteca/sistemas/bestas-espirituais/')}>Bestas Espirituais</a>.</p>
+    </header>
+    <div class="tabela-rolagem" tabindex="0" role="region" aria-label="Tabela do bestiário">
+      <table>
+        <thead><tr><th>Besta</th><th>Reino</th><th>Região</th><th>Perigo</th><th>Domável</th><th>Ingredientes</th></tr></thead>
+        <tbody>
+          {bestas.map((b) => (
+            <tr><td><strong>{b.nome}</strong><br /><span class="mudo">{b.texto}</span></td><td>{b.reino}</td><td>{b.regiao}</td><td>{b.perigo}</td><td>{b.domavel ? 'sim' : 'não'}</td><td>{b.ingredientes}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Base>
