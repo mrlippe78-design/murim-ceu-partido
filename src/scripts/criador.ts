@@ -31,12 +31,17 @@ function normalizar(f: Ficha): Ficha {
 // ───────── salvar ─────────
 const salvarAgora = async () => {
   if (!editavel) return;
+  pendente = false;
   $('#salvo').textContent = 'Salvando…';
   const { error } = await supabase.from('personagens').update({ ficha, nome: p.nome }).eq('id', p.id);
   if (error) { $('#salvo').textContent = 'Não salvou.'; toast(mensagemErro(error), true); return; }
   $('#salvo').textContent = `Rascunho salvo às ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}`;
 };
-const salvar = adiar(salvarAgora, 700);
+const salvarAdiado = adiar(salvarAgora, 700);
+let pendente = false;
+function salvar() { pendente = true; salvarAdiado(); }
+/** Grava já o que estiver pendente (troca de passo, saída da página, aba escondida). */
+function salvarJa() { if (pendente) { pendente = false; void salvarAgora(); } }
 function mudou() { atualizarResumo(); salvar(); }
 
 // ───────── resumo lateral ─────────
@@ -201,6 +206,7 @@ const render: Array<() => string> = [
 ];
 
 function irPara(n: number) {
+  salvarJa();
   passo = Math.max(0, Math.min(TOTAL - 1, n));
   $('#palco').innerHTML = render[passo]();
   $$('.passos button').forEach((b, i) => { if (i === passo) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
@@ -332,4 +338,7 @@ export async function iniciarCriador() {
   $('#anterior').onclick = () => { irPara(passo - 1); $('#palco').focus(); };
   $('#proximo').onclick = () => { irPara(passo === TOTAL - 1 ? 0 : passo + 1); $('#palco').focus(); window.scrollTo({ top: 0 }); };
   irPara(Number(param('passo') ?? 1) - 1);
+  addEventListener('pagehide', salvarJa);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') salvarJa(); });
+  addEventListener('beforeunload', (e) => { if (pendente) { salvarJa(); e.preventDefault(); } });
 }
