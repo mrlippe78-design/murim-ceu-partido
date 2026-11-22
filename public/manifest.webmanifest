@@ -1,0 +1,23 @@
+{
+  "name": "Murim: Céu Partido",
+  "short_name": "Céu Partido",
+  "description": "Biblioteca da seita: regras, fichas e Leitura do Destino do RPG Murim: Céu Partido.",
+  "lang": "pt-BR",
+  "start_url": "/murim-ceu-partido/",
+  "scope": "/murim-ceu-partido/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0a09",
+  "theme_color": "#0c0a09",
+  "categories": ["games", "books"],
+  "icons": [
+    { "src": "/murim-ceu-partido/icones/icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/murim-ceu-partido/icones/icone-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/murim-ceu-partido/icones/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Biblioteca", "url": "/murim-ceu-partido/biblioteca/" },
+    { "name": "Minha conta", "url": "/murim-ceu-partido/conta/" },
+    { "name": "Rolador de dados", "url": "/murim-ceu-partido/ferramentas/dados/" }
+  ]
+}
