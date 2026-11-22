@@ -15,6 +15,7 @@ Tudo o que não foi escrito ou desenhado para este projeto, com autor, versão e
 | @playwright/test | 1.65.1 | Apache-2.0 | https://github.com/microsoft/playwright | Testes no navegador e geração das prévias de link |
 | Lighthouse | 13 | Apache-2.0 | https://github.com/GoogleChrome/lighthouse | Medição de qualidade |
 | Supabase CLI | 3.2 | MIT | https://github.com/supabase/cli | Publicação de funções e migrações |
+| subset-font | 2.9.0 | BSD-3-Clause | https://github.com/papandreou/subset-font | Fonte de ideogramas reduzida aos caracteres usados |
 | withastro/action | v6 | MIT | https://github.com/withastro/action | Build no GitHub Actions |
 
 Serviço: **Supabase** (Auth, Postgres, Edge Functions), plano gratuito. Hospedagem do site: **GitHub Pages**.
