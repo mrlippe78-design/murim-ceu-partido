@@ -1,0 +1,13 @@
+{
+  "_leia": "CONFIGURAÇÃO GERAL. Troque o link do grupo e o contato da administração aqui; nada mais precisa mudar.",
+  "titulo": "Murim: Céu Partido",
+  "frase": "O céu se partiu há trinta e um anos. Ninguém o costurou.",
+  "convite": "RPG de murim pelo WhatsApp. Seitas, venenos, duelos e um trono vazio.",
+  "linkGrupo": "https://chat.whatsapp.com/EXEMPLO-troque-este-link",
+  "contatoAdmin": {
+    "nome": "Administração da Seita",
+    "texto": "Fale com a administração dentro do grupo ou pelo e-mail abaixo.",
+    "email": "contato@exemplo.com"
+  },
+  "ano": 31
+}

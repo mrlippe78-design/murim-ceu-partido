@@ -1,0 +1,10 @@
+[
+  {
+    "id": "2026-11-22-abertura",
+    "data": "2026-11-22",
+    "titulo": "A biblioteca abriu as portas",
+    "mudou": "Primeira versão oficial das regras: criação, cultivo, combate, Leitura do Destino e sistemas do Jianghu.",
+    "porque": "O grupo nasce junto com o site; esta é a base de tudo.",
+    "paginas": ["comece/o-que-e", "personagem/leitura-do-destino"]
+  }
+]

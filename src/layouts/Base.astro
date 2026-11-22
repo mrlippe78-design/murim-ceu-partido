@@ -1,0 +1,180 @@
+---
+import '../styles/global.css';
+import { url } from '../lib/caminhos';
+import { menu } from '../data/navegacao';
+import site from '../data/site.json';
+import novidades from '../data/novidades.json';
+
+interface Props {
+  titulo?: string;
+  descricao?: string;
+  og?: string; // caminho da imagem de prévia (1200x630)
+  semRodape?: boolean;
+  classe?: string;
+  noindex?: boolean;
+}
+const { titulo, descricao = site.convite, og = '/og/padrao.jpg', semRodape = false, classe = '', noindex = false } = Astro.props;
+const tituloCompleto = titulo ? `${titulo} · ${site.titulo}` : `${site.titulo} — RPG de murim`;
+const canonico = new URL(Astro.url.pathname, Astro.site).href;
+const ogAbs = new URL(url(og), Astro.site).href;
+const atual = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const ultimaNovidade = novidades[0];
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonico} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#0c0a09" />
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={url('/icones/icone-192.png')} />
+    <link rel="manifest" href={url('/manifest.webmanifest')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={site.titulo} />
+    <meta property="og:title" content={titulo ?? site.titulo} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonico} />
+    <meta property="og:image" content={ogAbs} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${titulo ?? site.titulo} — ${site.frase}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titulo ?? site.titulo} />
+    <meta name="twitter:description" content={descricao} />
+    <meta name="twitter:image" content={ogAbs} />
+    <slot name="head" />
+  </head>
+  <body class={classe} data-base={import.meta.env.BASE_URL}>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    <div class="faixa-novidade" id="faixa-novidade" hidden data-id={ultimaNovidade.id}>
+      <span class="rotulo ouro">Regra nova</span>
+      <a href={url('/novidades/')}>{ultimaNovidade.titulo}</a>
+      <button type="button" class="fechar-faixa" aria-label="Dispensar aviso">×</button>
+    </div>
+    <header class="topo">
+      <a class="marca" href={url('/')} aria-label="Murim: Céu Partido, página inicial">
+        <span class="selo" aria-hidden="true">裂</span>
+        <span class="marca-texto">Murim<span class="marca-sub">Céu Partido</span></span>
+      </a>
+      <nav class="nav-principal" aria-label="Principal">
+        <ul>
+          {menu.map((m) => (
+            <li><a href={url(m.href)} aria-current={atual.startsWith(m.href) ? 'page' : undefined}>{m.nome}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <div class="topo-acoes">
+        <a class="icone-busca" href={url('/buscar/')} aria-label="Buscar no site">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg>
+        </a>
+        <a class="btn pequeno link-conta" id="link-conta" href={url('/conta/')}>Entrar</a>
+        <button class="botao-menu" type="button" aria-expanded="false" aria-controls="menu-movel" aria-label="Abrir menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </header>
+    <div class="menu-movel" id="menu-movel" hidden>
+      <span class="menu-ideograma" aria-hidden="true">道</span>
+      <nav aria-label="Menu">
+        <ul>
+          {menu.map((m, i) => (<li style={`--i:${i}`}><a href={url(m.href)}>{m.nome}</a></li>))}
+          <li style={`--i:${menu.length}`}><a href={url('/buscar/')}>Buscar</a></li>
+          <li style={`--i:${menu.length + 1}`}><a href={url('/conta/')}>Minha conta</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <main id="conteudo" class={classe ? `main-${classe}` : ''}>
+      <slot />
+    </main>
+
+    {!semRodape && (
+      <footer class="rodape">
+        <div class="envoltorio rodape-grade">
+          <div>
+            <p class="rodape-titulo">Murim: Céu Partido</p>
+            <p class="sutil">Ano {site.ano} após a Guerra do Eclipse. Projeto pessoal e acadêmico, sem fins comerciais.</p>
+          </div>
+          <nav aria-label="Rodapé">
+            <ul>
+              <li><a href={url('/biblioteca/')}>Biblioteca</a></li>
+              <li><a href={url('/novidades/')}>Mudanças nas regras</a></li>
+              <li><a href={url('/creditos/')}>Créditos</a></li>
+              <li><a href={url('/privacidade/')}>Privacidade</a></li>
+              <li><button type="button" id="botao-som" class="link-som" aria-pressed="false">Som ambiente: desligado</button></li>
+            </ul>
+          </nav>
+        </div>
+      </footer>
+    )}
+    <div class="toast-area" aria-live="polite" id="toasts"></div>
+
+    <script>
+      import { iniciarGlobal } from '../scripts/global';
+      iniciarGlobal();
+    </script>
+  </body>
+</html>
+
+<style>
+  .topo {
+    position: sticky; top: 0; z-index: 60;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    height: var(--topo); padding: 0 1rem;
+    background: rgba(12, 10, 9, .9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(59, 47, 40, .6);
+  }
+  .marca { display: flex; align-items: center; gap: .7rem; text-decoration: none; color: var(--papel); }
+  .marca .selo { width: 2.1rem; height: 2.1rem; font-size: 1.25rem; }
+  .marca-texto { font: 400 1.15rem/1 var(--f-display); letter-spacing: .04em; display: grid; }
+  .marca-sub { font: 700 .62rem/1.4 var(--f-ui); letter-spacing: .3em; text-transform: uppercase; color: var(--sangue-texto); }
+  .nav-principal { display: none; }
+  .nav-principal ul { display: flex; gap: .3rem; list-style: none; margin: 0; padding: 0; }
+  .nav-principal a { display: block; padding: .5rem .8rem; font: 500 1rem var(--f-ui); text-decoration: none; color: var(--papel-2); letter-spacing: .02em; }
+  .nav-principal a:hover, .nav-principal a[aria-current='page'] { color: var(--papel); }
+  .nav-principal a[aria-current='page'] { box-shadow: inset 0 -2px 0 var(--sangue-vivo); }
+  .topo-acoes { display: flex; align-items: center; gap: .5rem; }
+  .icone-busca { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; color: var(--papel-2); }
+  .icone-busca:hover { color: var(--papel); }
+  .link-conta { display: none; }
+  .botao-menu { width: 2.9rem; height: 2.9rem; background: none; border: 0; display: grid; place-content: center; gap: 7px; cursor: pointer; padding: 0; }
+  .botao-menu span { display: block; width: 24px; height: 2px; background: var(--papel); transition: transform var(--rapido); }
+  .botao-menu span:last-child { width: 16px; justify-self: end; background: var(--sangue-vivo); }
+  .botao-menu[aria-expanded='true'] span:first-child { transform: translateY(4.5px) rotate(45deg); }
+  .botao-menu[aria-expanded='true'] span:last-child { width: 24px; transform: translateY(-4.5px) rotate(-45deg); }
+  @media (min-width: 980px) {
+    .topo { padding: 0 2rem; }
+    .nav-principal { display: block; }
+    .botao-menu { display: none; }
+    .link-conta { display: inline-flex; }
+  }
+  .menu-movel {
+    position: fixed; inset: var(--topo) 0 0 0; z-index: 55;
+    background: var(--tinta); padding: 2rem 1.5rem; overflow: hidden;
+  }
+  .menu-movel:not([hidden]) { display: block; }
+  .menu-ideograma { position: absolute; right: -2rem; bottom: -3rem; font: 400 22rem/1 var(--f-display); color: var(--sangue); opacity: .14; pointer-events: none; }
+  .menu-movel ul { list-style: none; margin: 0; padding: 0; position: relative; }
+  .menu-movel li { border-bottom: 1px solid var(--linha); animation: entrar .45s both; animation-delay: calc(var(--i) * 45ms); }
+  .menu-movel a { display: block; padding: 1rem 0; font: 400 1.7rem var(--f-display); text-decoration: none; }
+  @keyframes entrar { from { opacity: 0; transform: translateX(-16px); } }
+
+  .faixa-novidade { display: flex; align-items: center; gap: .8rem; padding: .5rem 1rem; background: #1c120c; border-bottom: 1px solid #4a3418; font: .92rem var(--f-ui); }
+  .faixa-novidade[hidden] { display: none; }
+  .faixa-novidade a { color: var(--ouro-claro); flex: 1; }
+  .fechar-faixa { background: none; border: 0; color: var(--papel-2); font-size: 1.5rem; cursor: pointer; width: 2.75rem; height: 2.75rem; }
+
+  .rodape { border-top: 1px solid var(--linha); padding: 3rem 0 4rem; margin-top: 4rem; background: linear-gradient(var(--tinta), #080605); }
+  .rodape-grade { display: grid; gap: 2rem; }
+  @media (min-width: 760px) { .rodape-grade { grid-template-columns: 1.4fr 1fr; } }
+  .rodape-titulo { font: 400 1.4rem var(--f-display); margin-bottom: .3rem; }
+  .rodape ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; font: 1rem var(--f-ui); }
+  .rodape a, .link-som { color: var(--papel-2); display: inline-block; padding: .35rem 0; }
+  .link-som { background: none; border: 0; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-color: var(--linha); text-underline-offset: .2em; }
+</style>

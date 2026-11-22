@@ -1,0 +1,19 @@
+{
+  "_leia": "ESPAÇOS DE IMAGEM. Para trocar uma imagem: coloque o arquivo em public/assets/img/ e mude o 'arquivo' do espaço desejado. Use 'alt' para descrever a imagem em português (leitores de tela leem isso).",
+  "hero": { "arquivo": "/assets/img/hero.webp", "alt": "Pintura antiga de uma montanha imensa na névoa, com viajantes minúsculos na trilha" },
+  "convite-faixa": { "arquivo": "/assets/img/nevoa-montanha.webp", "alt": "Montanhas retorcidas surgindo da névoa no início da primavera" },
+  "como-entrar": { "arquivo": "/assets/img/inwang.webp", "alt": "Montanha de pedra escura depois da chuva, com névoa entre os pinheiros" },
+  "regiao-norte": { "arquivo": "/assets/img/pinheiros.webp", "alt": "Pinheiros em vales profundos e frios" },
+  "regiao-sul": { "arquivo": "/assets/img/rio.webp", "alt": "Rio largo entre montanhas baixas e barcos distantes" },
+  "regiao-oeste": { "arquivo": "/assets/img/viagem-shu.webp", "alt": "Caravana de cavaleiros atravessando desfiladeiros avermelhados" },
+  "regiao-leste": { "arquivo": "/assets/img/rio.webp", "alt": "Margens de rio sob a névoa da costa" },
+  "regiao-coracao": { "arquivo": "/assets/img/hero.webp", "alt": "Montanha monumental que domina a paisagem" },
+  "regiao-montanhas": { "arquivo": "/assets/img/nevoa-montanha.webp", "alt": "Picos tortos cobertos de névoa" },
+  "faccao-alianca": { "arquivo": "/assets/img/nevoa-montanha.webp", "alt": "Templos escondidos entre montanhas" },
+  "faccao-clas_nobres": { "arquivo": "/assets/img/viagem-shu.webp", "alt": "Comitiva nobre a cavalo nas montanhas" },
+  "faccao-heterodoxa": { "arquivo": "/assets/img/rio.webp", "alt": "Rio sombrio onde vivem piratas" },
+  "faccao-culto": { "arquivo": "/assets/img/inwang.webp", "alt": "Montanha escura de pedra sob nuvens pesadas" },
+  "faccao-corte": { "arquivo": "/assets/img/hero.webp", "alt": "A montanha que vigia a capital" },
+  "leitura": { "arquivo": "/assets/img/pinheiros.webp", "alt": "Vale de pinheiros onde o destino é lido" },
+  "og-padrao": { "arquivo": "/og/padrao.jpg", "alt": "Murim: Céu Partido — convite" }
+}

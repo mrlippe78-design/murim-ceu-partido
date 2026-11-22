@@ -1,0 +1,21 @@
+[
+  { "termo": "Qi", "formas": ["Qi"], "def": "A energia vital que o artista marcial acumula e conduz pelos meridianos. Medida em pontos; 100 de Qi equivalem a um ano de energia cultivada." },
+  { "termo": "Dantian", "formas": ["dantian", "Dantian"], "def": "O 'campo de elixir' abaixo do umbigo, onde o Qi é guardado. Um dantian rachado vaza energia." },
+  { "termo": "Gargalo", "formas": ["gargalo", "Gargalo", "gargalos"], "def": "A barreira entre um reino e o próximo. Rompê-la exige um texto de 40+ linhas e uma rolagem de 3d6 no servidor." },
+  { "termo": "Jianghu", "formas": ["Jianghu"], "def": "Literalmente 'rios e lagos': o mundo à margem da lei onde vivem artistas marciais, bandidos, seitas e andarilhos." },
+  { "termo": "Murim", "formas": ["murim", "Murim"], "def": "A 'floresta marcial': o conjunto das seitas, clãs e artistas marciais. Sinônimo coreano de Jianghu." },
+  { "termo": "Desvio de Qi", "formas": ["Desvio de Qi", "desvio de Qi"], "def": "Quando o Qi foge do controle durante um avanço. Rola-se 1d6 na tabela de Desvio: do dantian rachado ao avanço pela fresta." },
+  { "termo": "Meridianos", "formas": ["meridianos", "Meridianos", "meridiano"], "def": "Os canais por onde o Qi corre: 12 principais e 8 extraordinários. Abrem conforme o cultivo avança." },
+  { "termo": "Corrupção", "formas": ["Corrupção"], "def": "A mancha deixada por artes demoníacas e desvios. De 0 a 100; a cada 25 surge uma marca visível, e com 100 o personagem enlouquece." },
+  { "termo": "PE", "formas": ["PE"], "def": "Pontos de Experiência: medem o cultivo acumulado. Nunca viram atributos e nunca são transferidos." },
+  { "termo": "PA", "formas": ["PA"], "def": "Pontos de Atributo: só vêm de avanços de estágio ou reino e são distribuídos entre Força, Agilidade, Resistência, Precisão e Vigor." },
+  { "termo": "Taéis", "formas": ["taéis", "Taéis", "tael"], "def": "A moeda do mundo: pequenas barras de prata. Um tael alimenta uma pessoa por dois ou três dias." },
+  { "termo": "Arte Interna", "formas": ["Arte Interna"], "def": "O método de cultivo do personagem: define a natureza do Qi e um efeito passivo. Cada um só tem uma." },
+  { "termo": "Leitura do Destino", "formas": ["Leitura do Destino"], "def": "O sorteio oficial feito no servidor que revela Corpo Marcial, Raiz de Qi ou Linhagem rara. Não pode ser refeito." },
+  { "termo": "Fio do Destino", "formas": ["Fio do Destino", "Fios"], "def": "Cada Leitura de Corpo abaixo de Épico gera 1 Fio. Com 40 Fios, a próxima Leitura de Corpo garante pelo menos Épico." },
+  { "termo": "Energia de Arma", "formas": ["Energia de Arma"], "def": "Qi projetado na lâmina, visível como um brilho. Exige Primeira Classe e uma arma que aguente." },
+  { "termo": "Heterodoxo", "formas": ["heterodoxos", "Heterodoxa", "heterodoxa"], "def": "Quem vive fora das regras das seitas ortodoxas: piratas, envenenadores, assassinos, bandidos." },
+  { "termo": "Tribulação", "formas": ["Tribulação", "Tribulações"], "def": "Um teste imposto pelo céu a quem cultiva rápido demais: raios, visões, inimigos. Pode dar um salto de poder ou destruir o personagem." },
+  { "termo": "Selamento", "formas": ["Selamento", "selamento"], "def": "Golpe preciso em pontos vitais que paralisa um membro ou bloqueia o Qi por 2 turnos." },
+  { "termo": "Ferimento Interno", "formas": ["Ferimento Interno", "Ferimentos Internos"], "def": "Dano aos órgãos e meridianos: −25% de Qi máximo até ser tratado por um médico." }
+]
