@@ -10,6 +10,12 @@ ideograma: 石
 
 Os monges da Pedra Silenciosa raspam a cabeça, vestem ocre e treinam o corpo até ele virar pedra. Lutam com punhos, palmas e bastões. O templo acolhe órfãos e feridos de qualquer facção, o que irrita a Aliança.
 
+## História
+
+O templo nasceu de um crime. O fundador matou o próprio irmão num duelo por herança, raspou a cabeça na mesma noite e jurou não falar nem matar até a morte. Os primeiros discípulos eram órfãos e desertores que ele acolhia sem perguntar o passado, e o templo mantém esse costume até hoje.
+
+Durante séculos, a Pedra Silenciosa ficou fora da política. Entrou na Aliança no Ano −60 só porque a alternativa era ver as seitas heterodoxas queimarem os vilarejos ao redor. Na Guerra do Eclipse, os monges seguraram a retaguarda sem matar um único cultista: capturaram trezentos. A Aliança executou todos depois da batalha, e o **Abade Mun-seok** nunca perdoou. É por isso que o templo ameaça sair sempre que a Aliança fala em perdão para uns e forca para outros.
+
 ## Vantagem e obrigação
 
 - **Vantagem:** +10% em técnicas defensivas.

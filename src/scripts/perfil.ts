@@ -108,7 +108,7 @@ function acoesDono(c: Linha, envios: Linha[]) {
       <form id="form-envio" style="margin-top:1rem">
         <div class="grade-campos">
           <div class="campo"><label for="env-tipo">Tipo</label><select id="env-tipo">
-            <option value="treino">Treino (80+ linhas)</option><option value="missao_facil">Missão fácil (40+)</option>
+            <option value="treino">Treino (20+ linhas)</option><option value="missao_facil">Missão fácil (40+)</option>
             <option value="missao_media">Missão média (60+)</option><option value="missao_dificil">Missão difícil (80+)</option>
             ${podePedir ? '<option value="pedido_avanco">Pedido de avanço (40+)</option>' : ''}</select></div>
           <div class="campo"><label for="env-titulo">Título</label><input id="env-titulo" required minlength="2" maxlength="120" /></div>
@@ -127,7 +127,7 @@ function acoesDono(c: Linha, envios: Linha[]) {
 }
 
 function ligarDono(c: Linha) {
-  const minimo: Record<string, number> = { treino: 80, missao_facil: 40, missao_media: 60, missao_dificil: 80, pedido_avanco: 40 };
+  const minimo: Record<string, number> = { treino: 20, missao_facil: 40, missao_media: 60, missao_dificil: 80, pedido_avanco: 40 };
   const tipo = $('#env-tipo') as HTMLSelectElement | null;
   const texto = $('#env-texto') as HTMLTextAreaElement | null;
   const atualizar = () => {

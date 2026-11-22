@@ -51,7 +51,7 @@ export function textoFicha(p: Personagem): string {
 export const MODELOS: Record<string, { titulo: string; texto: string }> = {
   treino: {
     titulo: 'Treino',
-    texto: `*━━━ 【 TREINO 】 ━━━*\n*Personagem:* \n*Foco:* (técnica, atributo, meridiano ou manual)\n*Local:* \n*Duração na história:* \n\n_(80 linhas ou mais: começo, esforço, dificuldade, pequena descoberta, final)_\n\n`,
+    texto: `*━━━ 【 TREINO 】 ━━━*\n*Personagem:* \n*Foco:* (técnica, atributo, meridiano ou manual)\n*Local:* \n*Duração na história:* \n\n_(20 linhas ou mais: começo, esforço, dificuldade, pequena descoberta, final)_\n\n`,
   },
   missao: {
     titulo: 'Missão autonarrada',

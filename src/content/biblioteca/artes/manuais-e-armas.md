@@ -29,6 +29,16 @@ Um manual ensina uma técnica (ou uma Arte Interna) de grau compatível. **Apren
 
 O bônus da arma soma no ataque: **Ataque = atributo + técnica + arma**.
 
+## Armas do Jianghu
+
+As **quatro armas principais** são a espada (reta, de dois gumes, elegante), o sabre (curvo, de um gume, pesado e "bruto"), a lança (com borla, rainha do campo de batalha) e o bastão (de madeira ou ferro, arma de monges e mendigos). Qualquer outra arma usa as mesmas regras de bônus; a diferença é narrativa.
+
+- **Armas ocultas:** agulhas, dardos, facas de arremesso, flechas de manga, moedas afiadas. Quase sempre envenenadas. Usam Precisão e técnicas Ocultas.
+- **Armas incomuns:** leque de varetas de aço, espanador de crina, pincel de juiz, régua de ferro, chicote de nove seções, bastão de três seções, dardo de corda, martelo-meteoro, facas-borboleta, guandao, pá de monge, garra voadora, ábaco de ferro, até instrumentos musicais com lâmina escondida.
+- **Armas de cavalaria:** lança longa, sabre de cortar cavalos, arco curto. Especialidade do Clã Baek.
+
+Escolher uma arma estranha é um ótimo jeito de dar personalidade ao personagem. A administração aprova qualquer arma que caiba nas regras de bônus.
+
 ## Infundir Qi em armas
 
 A partir da Primeira Classe, o personagem pode projetar **Energia de Arma**. Mas o aço tem limite:

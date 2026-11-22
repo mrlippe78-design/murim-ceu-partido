@@ -1,26 +1,262 @@
 [
-  { "nome": "Yeon Taek-su", "alcunha": "o Juiz de Jade", "reino": "Pico", "faccao": "Aliança Marcial", "regiao": "Montanhas Centrais", "status": "vivo", "relacao": "Autoridade", "texto": "Veterano do Planalto da Lua Rubra que preside o Salão da Espada Embainhada. Vende sentenças e chama isso de diplomacia." },
-  { "nome": "Un-hak", "alcunha": "a Garça Branca", "reino": "Pico", "faccao": "Montanha Celeste", "regiao": "Montanhas Centrais", "status": "vivo", "relacao": "Mestre possível", "texto": "Patriarca idoso da Montanha Celeste. Perdeu para a Espada Sem Nome no Ano −14 e guarda um bilhete dela que nunca abriu." },
-  { "nome": "Mun-seok", "alcunha": "o Abade", "reino": "Pico", "faccao": "Pedra Silenciosa", "regiao": "Montanhas Centrais", "status": "vivo", "relacao": "Aliado", "texto": "Abade que acolhe feridos de qualquer facção e ameaça sair da Aliança." },
-  { "nome": "Seol-ha", "alcunha": "a Lâmina de Geada", "reino": "Pico", "faccao": "Pico Gélido", "regiao": "Montanhas Centrais", "status": "vivo", "relacao": "Neutra", "texto": "Senhora do Pico Gélido. Não envelhece desde a Guerra; quer os manuais da Espada Sem Nome antes de todos." },
-  { "nome": "Velho Juk", "alcunha": "o Mendigo das Mil Pegadas", "reino": "Pico", "faccao": "Sandálias de Palha", "regiao": "Coração Imperial", "status": "vivo", "relacao": "Informante", "texto": "Líder da Irmandade. Talvez o único que viu o duelo da Ponte dos Nove Corvos." },
-  { "nome": "Seo-Mun Gang-cheol", "alcunha": "o Portão de Ferro", "reino": "Pico", "faccao": "Clã Seo-Mun", "regiao": "Coração Imperial", "status": "vivo", "relacao": "Neutro", "texto": "Patriarca que nunca recusou um duelo. Carrega a ponta quebrada da espada da Espada Sem Nome." },
-  { "nome": "Hwa Yeon-ji", "alcunha": "a Dama das Mil Agulhas", "reino": "Primeira Classe", "faccao": "Clã Hwa", "regiao": "Sul dos Rios", "status": "vivo", "relacao": "Perigosa", "texto": "Matriarca do Clã Hwa. Sorri, negocia e envenena com a mesma elegância." },
-  { "nome": "Mo-Ryeong Ji-an", "alcunha": "o Estrategista de Seda", "reino": "Primeira Classe", "faccao": "Clã Mo-Ryeong", "regiao": "Montanhas Centrais", "status": "vivo", "relacao": "Mestre possível", "texto": "Previu a Guerra do Eclipse e não foi ouvido. Joga partidas por carta com alguém da Corte." },
-  { "nome": "Baek Mu-seong", "alcunha": "o General do Norte", "reino": "Pico", "faccao": "Clã Baek", "regiao": "Norte Gelado", "status": "vivo", "relacao": "Autoridade", "texto": "Guarda a fronteira norte e proibiu escavações no Mosteiro Soterrado." },
-  { "nome": "Ma Cheol-gang", "alcunha": "o Chefe dos Dezoito Rios", "reino": "Pico", "faccao": "Dezoito Rios", "regiao": "Sul dos Rios", "status": "vivo", "relacao": "Hostil", "texto": "Deve dinheiro a alguém que nem ele ousa nomear, e aumentou o pedágio." },
-  { "nome": "Avó Ryeong-mae", "alcunha": "a Matriarca dos Venenos", "reino": "Pico", "faccao": "Cem Venenos", "regiao": "Sul dos Rios", "status": "vivo", "relacao": "Perigosa", "texto": "Assumiu a culpa por Dongcheon rápido demais. Protege alguém." },
-  { "nome": "O Contador", "alcunha": null, "reino": "Desconhecido", "faccao": "Pavilhão Sem Rosto", "regiao": "Leste Costeiro", "status": "desconhecido", "relacao": "Contratante", "texto": "Guarda o livro de contratos do Pavilhão. Ninguém viu seu rosto." },
-  { "nome": "Heuk-rang", "alcunha": "o Lobo Caolho", "reino": "Primeira Classe", "faccao": "Lobo Negro", "regiao": "Oeste Vermelho", "status": "vivo", "relacao": "Hostil", "texto": "Chefe do Covil. Odeia o Culto e negocia com ele." },
-  { "nome": "Hyeol So-ah", "alcunha": "a Viúva Rubra", "reino": "Pico", "faccao": "Culto · Guarda Carmesim", "regiao": "Oeste Vermelho", "status": "vivo", "relacao": "Candidata ao trono", "texto": "Governa o Culto de fato. Negocia em segredo com a Corte." },
-  { "nome": "Ak-yun", "alcunha": "o Filho de Ninguém", "reino": "Segunda Classe?", "faccao": "Culto", "regiao": "Oeste Vermelho", "status": "vivo", "relacao": "Candidato ao trono", "texto": "Diz ser filho do Soberano. Seu Qi é forte demais para o reino que declara." },
-  { "nome": "Gwi-mok", "alcunha": "o Ancião Sem Pálpebras", "reino": "Pico", "faccao": "Culto · Sete Anciãos", "regiao": "Oeste Vermelho", "status": "vivo", "relacao": "Candidato ao trono", "texto": "Quer ressuscitar o Soberano e acredita precisar de um corpo Mítico." },
-  { "nome": "Yeom-hwa", "alcunha": "a Chama Que Anda", "reino": "Primeira Classe", "faccao": "Culto · Chama Invertida", "regiao": "Oeste Vermelho", "status": "vivo", "relacao": "Candidata ao trono", "texto": "Queima a própria vida. Tem menos de um ano, e quer levar a Aliança junto." },
-  { "nome": "Gong Hwa-ryeon", "alcunha": "o Chanceler", "reino": "Nenhum", "faccao": "Corte", "regiao": "Coração Imperial", "status": "vivo", "relacao": "Manipulador", "texto": "Paga as facções para se matarem. Mais barato que um exército." },
-  { "nome": "Imperador Hyeonmu", "alcunha": "o Imperador de Seda", "reino": "Nenhum", "faccao": "Corte", "regiao": "Coração Imperial", "status": "vivo", "relacao": "Distante", "texto": "Vinte e dois anos, pinta garças no Palácio de Inverno. Ou é isso que deixam o povo pensar." },
-  { "nome": "Dok Yu-seong", "alcunha": "o Cão do Trono", "reino": "Pico", "faccao": "Guarda do Dragão Negro", "regiao": "Coração Imperial", "status": "vivo", "relacao": "Autoridade", "texto": "Comandante da Guarda. Investiga os Sem Bandeira, e as pistas apontam para o palácio." },
-  { "nome": "Gu Dae-ho", "alcunha": "o Raio de Hanbyeok", "reino": "Primeira Classe", "faccao": "Trovão do Norte", "regiao": "Norte Gelado", "status": "vivo", "relacao": "Contratante", "texto": "Chefe de Escolta. Sete cargas perdidas este ano; desconfia de alguém de dentro." },
-  { "nome": "A Senhora das Persianas", "alcunha": null, "reino": "Desconhecido", "faccao": "Mil Ouvidos", "regiao": "Coração Imperial", "status": "desconhecido", "relacao": "Informante", "texto": "Dona do Pavilhão dos Mil Ouvidos. Sabe quem matou a Espada Sem Nome." },
-  { "nome": "A Espada Sem Nome", "alcunha": null, "reino": "Vida e Morte?", "faccao": "Andarilhos", "regiao": "Norte Gelado?", "status": "desaparecido", "relacao": "Lenda", "texto": "Caiu na Ponte dos Nove Corvos no Ano 0. O corpo nunca foi encontrado." },
-  { "nome": "O Soberano de Sangue", "alcunha": null, "reino": "Vida e Morte", "faccao": "Culto da Lua de Sangue", "regiao": "?", "status": "desaparecido", "relacao": "Lenda", "texto": "Desapareceu no Planalto da Lua Rubra. As lanternas voltaram a acender." }
+  {
+    "nome": "Yeon Taek-su",
+    "alcunha": "o Juiz de Jade",
+    "reino": "Pico",
+    "faccao": "Aliança Marcial",
+    "regiao": "Montanhas Centrais",
+    "status": "vivo",
+    "relacao": "Autoridade",
+    "texto": "Veterano do Planalto da Lua Rubra que preside o Salão da Espada Embainhada. Vende sentenças e chama isso de diplomacia."
+  },
+  {
+    "nome": "Un-hak",
+    "alcunha": "a Garça Branca",
+    "reino": "Pico",
+    "faccao": "Montanha Celeste",
+    "regiao": "Montanhas Centrais",
+    "status": "vivo",
+    "relacao": "Mestre possível",
+    "texto": "Patriarca idoso da Montanha Celeste. Perdeu para a Espada Sem Nome no Ano −14 e guarda um bilhete dela que nunca abriu."
+  },
+  {
+    "nome": "Mun-seok",
+    "alcunha": "o Abade",
+    "reino": "Pico",
+    "faccao": "Pedra Silenciosa",
+    "regiao": "Montanhas Centrais",
+    "status": "vivo",
+    "relacao": "Aliado",
+    "texto": "Abade que acolhe feridos de qualquer facção e ameaça sair da Aliança."
+  },
+  {
+    "nome": "Seol-ha",
+    "alcunha": "a Lâmina de Geada",
+    "reino": "Pico",
+    "faccao": "Pico Gélido",
+    "regiao": "Montanhas Centrais",
+    "status": "vivo",
+    "relacao": "Neutra",
+    "texto": "Senhora do Pico Gélido. Não envelhece desde a Guerra; quer os manuais da Espada Sem Nome antes de todos."
+  },
+  {
+    "nome": "Velho Juk",
+    "alcunha": "o Mendigo das Mil Pegadas",
+    "reino": "Pico",
+    "faccao": "Sandálias de Palha",
+    "regiao": "Coração Imperial",
+    "status": "vivo",
+    "relacao": "Informante",
+    "texto": "Líder da Irmandade. Talvez o único que viu o duelo da Ponte dos Nove Corvos."
+  },
+  {
+    "nome": "Seo-Mun Gang-cheol",
+    "alcunha": "o Portão de Ferro",
+    "reino": "Pico",
+    "faccao": "Clã Seo-Mun",
+    "regiao": "Coração Imperial",
+    "status": "vivo",
+    "relacao": "Neutro",
+    "texto": "Patriarca que nunca recusou um duelo. Carrega a ponta quebrada da espada da Espada Sem Nome."
+  },
+  {
+    "nome": "Hwa Yeon-ji",
+    "alcunha": "a Dama das Mil Agulhas",
+    "reino": "Primeira Classe",
+    "faccao": "Clã Hwa",
+    "regiao": "Sul dos Rios",
+    "status": "vivo",
+    "relacao": "Perigosa",
+    "texto": "Matriarca do Clã Hwa. Sorri, negocia e envenena com a mesma elegância."
+  },
+  {
+    "nome": "Geum Seo-yeon",
+    "alcunha": "a Matriarca das Balanças",
+    "reino": "Primeira Classe",
+    "faccao": "Clã Geum",
+    "regiao": "Leste Costeiro",
+    "status": "vivo",
+    "relacao": "Contratante",
+    "texto": "Matriarca do Clã Geum. Metade das dívidas da Aliança está nos livros dela."
+  },
+  {
+    "nome": "Ok-ryeon",
+    "alcunha": "a Mão que Costura",
+    "reino": "Pico",
+    "faccao": "Lótus de Jade",
+    "regiao": "Montanhas Centrais",
+    "status": "vivo",
+    "relacao": "Aliada",
+    "texto": "Madre superiora do Convento da Lótus de Jade. Estuda a Febre Cinzenta e socorre quem cair na estrada, de qualquer lado."
+  },
+  {
+    "nome": "Mo-Ryeong Ji-an",
+    "alcunha": "o Estrategista de Seda",
+    "reino": "Primeira Classe",
+    "faccao": "Clã Mo-Ryeong",
+    "regiao": "Montanhas Centrais",
+    "status": "vivo",
+    "relacao": "Mestre possível",
+    "texto": "Previu a Guerra do Eclipse e não foi ouvido. Joga partidas por carta com alguém da Corte."
+  },
+  {
+    "nome": "Baek Mu-seong",
+    "alcunha": "o General do Norte",
+    "reino": "Pico",
+    "faccao": "Clã Baek",
+    "regiao": "Norte Gelado",
+    "status": "vivo",
+    "relacao": "Autoridade",
+    "texto": "Guarda a fronteira norte e proibiu escavações no Mosteiro Soterrado."
+  },
+  {
+    "nome": "Ma Cheol-gang",
+    "alcunha": "o Chefe dos Dezoito Rios",
+    "reino": "Pico",
+    "faccao": "Dezoito Rios",
+    "regiao": "Sul dos Rios",
+    "status": "vivo",
+    "relacao": "Hostil",
+    "texto": "Deve dinheiro a alguém que nem ele ousa nomear, e aumentou o pedágio."
+  },
+  {
+    "nome": "Avó Ryeong-mae",
+    "alcunha": "a Matriarca dos Venenos",
+    "reino": "Pico",
+    "faccao": "Cem Venenos",
+    "regiao": "Sul dos Rios",
+    "status": "vivo",
+    "relacao": "Perigosa",
+    "texto": "Assumiu a culpa por Dongcheon rápido demais. Protege alguém."
+  },
+  {
+    "nome": "O Contador",
+    "alcunha": null,
+    "reino": "Desconhecido",
+    "faccao": "Pavilhão Sem Rosto",
+    "regiao": "Leste Costeiro",
+    "status": "desconhecido",
+    "relacao": "Contratante",
+    "texto": "Guarda o livro de contratos do Pavilhão. Ninguém viu seu rosto."
+  },
+  {
+    "nome": "Heuk-rang",
+    "alcunha": "o Lobo Caolho",
+    "reino": "Primeira Classe",
+    "faccao": "Lobo Negro",
+    "regiao": "Oeste Vermelho",
+    "status": "vivo",
+    "relacao": "Hostil",
+    "texto": "Chefe do Covil. Odeia o Culto e negocia com ele."
+  },
+  {
+    "nome": "Hyeol So-ah",
+    "alcunha": "a Viúva Rubra",
+    "reino": "Pico",
+    "faccao": "Culto · Guarda Carmesim",
+    "regiao": "Oeste Vermelho",
+    "status": "vivo",
+    "relacao": "Candidata ao trono",
+    "texto": "Governa o Culto de fato. Negocia em segredo com a Corte."
+  },
+  {
+    "nome": "Ak-yun",
+    "alcunha": "o Filho de Ninguém",
+    "reino": "Segunda Classe?",
+    "faccao": "Culto",
+    "regiao": "Oeste Vermelho",
+    "status": "vivo",
+    "relacao": "Candidato ao trono",
+    "texto": "Diz ser filho do Soberano. Seu Qi é forte demais para o reino que declara."
+  },
+  {
+    "nome": "Gwi-mok",
+    "alcunha": "o Ancião Sem Pálpebras",
+    "reino": "Pico",
+    "faccao": "Culto · Sete Anciãos",
+    "regiao": "Oeste Vermelho",
+    "status": "vivo",
+    "relacao": "Candidato ao trono",
+    "texto": "Quer ressuscitar o Soberano e acredita precisar de um corpo Mítico."
+  },
+  {
+    "nome": "Yeom-hwa",
+    "alcunha": "a Chama Que Anda",
+    "reino": "Primeira Classe",
+    "faccao": "Culto · Chama Invertida",
+    "regiao": "Oeste Vermelho",
+    "status": "vivo",
+    "relacao": "Candidata ao trono",
+    "texto": "Queima a própria vida. Tem menos de um ano, e quer levar a Aliança junto."
+  },
+  {
+    "nome": "Gong Hwa-ryeon",
+    "alcunha": "o Chanceler",
+    "reino": "Nenhum",
+    "faccao": "Corte",
+    "regiao": "Coração Imperial",
+    "status": "vivo",
+    "relacao": "Manipulador",
+    "texto": "Paga as facções para se matarem. Mais barato que um exército."
+  },
+  {
+    "nome": "Imperador Hyeonmu",
+    "alcunha": "o Imperador de Seda",
+    "reino": "Nenhum",
+    "faccao": "Corte",
+    "regiao": "Coração Imperial",
+    "status": "vivo",
+    "relacao": "Distante",
+    "texto": "Vinte e dois anos, pinta garças no Palácio de Inverno. Ou é isso que deixam o povo pensar."
+  },
+  {
+    "nome": "Dok Yu-seong",
+    "alcunha": "o Cão do Trono",
+    "reino": "Pico",
+    "faccao": "Guarda do Dragão Negro",
+    "regiao": "Coração Imperial",
+    "status": "vivo",
+    "relacao": "Autoridade",
+    "texto": "Comandante da Guarda. Investiga os Sem Bandeira, e as pistas apontam para o palácio."
+  },
+  {
+    "nome": "Gu Dae-ho",
+    "alcunha": "o Raio de Hanbyeok",
+    "reino": "Primeira Classe",
+    "faccao": "Trovão do Norte",
+    "regiao": "Norte Gelado",
+    "status": "vivo",
+    "relacao": "Contratante",
+    "texto": "Chefe de Escolta. Sete cargas perdidas este ano; desconfia de alguém de dentro."
+  },
+  {
+    "nome": "A Senhora das Persianas",
+    "alcunha": null,
+    "reino": "Desconhecido",
+    "faccao": "Mil Ouvidos",
+    "regiao": "Coração Imperial",
+    "status": "desconhecido",
+    "relacao": "Informante",
+    "texto": "Dona do Pavilhão dos Mil Ouvidos. Sabe quem matou a Espada Sem Nome."
+  },
+  {
+    "nome": "A Espada Sem Nome",
+    "alcunha": null,
+    "reino": "Vida e Morte?",
+    "faccao": "Andarilhos",
+    "regiao": "Norte Gelado?",
+    "status": "desaparecido",
+    "relacao": "Lenda",
+    "texto": "Caiu na Ponte dos Nove Corvos no Ano 0. O corpo nunca foi encontrado."
+  },
+  {
+    "nome": "O Soberano de Sangue",
+    "alcunha": null,
+    "reino": "Vida e Morte",
+    "faccao": "Culto da Lua de Sangue",
+    "regiao": "?",
+    "status": "desaparecido",
+    "relacao": "Lenda",
+    "texto": "Desapareceu no Planalto da Lua Rubra. As lanternas voltaram a acender."
+  }
 ]

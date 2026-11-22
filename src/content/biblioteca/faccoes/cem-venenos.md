@@ -10,6 +10,12 @@ ideograma: 毒
 
 O Vale cria serpentes, sapos, centopeias e plantas que matam em um suspiro. Seus discípulos tomam pequenas doses de veneno desde crianças, até o sangue virar remédio e arma ao mesmo tempo. No Ano 28, envenenaram a cidade de Dongcheon. Quatro mil mortos.
 
+## História
+
+O Vale começou com um médico expulso da capital por testar remédios em prisioneiros. Ele se escondeu nos pântanos do sul, aprendeu com as serpentes e os sapos, e criou discípulos que tomavam veneno como outros tomam chá. Em duas gerações, o Vale curava doenças que a Corte não sabia nomear, e matava pessoas que a Corte não conseguia alcançar.
+
+A Aliança sempre tolerou o Vale porque precisava dos seus antídotos. Isso acabou no Ano 28, quando a cidade de **Dongcheon** foi envenenada e quatro mil pessoas morreram. A **Avó Ryeong-mae** assumiu a culpa em público, dizendo que era vingança pelo neto enforcado na cidade. Os próprios discípulos dela duvidam: o veneno usado não é do Vale, e a Avó nunca deixou ninguém examinar o corpo do neto.
+
 ## Vantagem e obrigação
 
 - **Vantagem:** imunidade a venenos de grau Básico.

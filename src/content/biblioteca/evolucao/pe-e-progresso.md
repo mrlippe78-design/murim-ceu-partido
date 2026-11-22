@@ -12,12 +12,12 @@ ideograma: 道
 
 | Fonte | Requisito | PE |
 |---|---|---|
-| **Treino** | 80+ linhas, foco definido, até **3 por semana** | 150 / 200 / 300 / 400 / 500 / 600 (pelo reino) |
+| **Treino** | 20+ linhas, foco definido, até **3 por semana** | 150 / 200 / 300 / 400 / 500 / 600 / 700 / 800 / 900 (pelo reino) |
 | **Missão autonarrada fácil** | 40+ linhas | 150 |
 | **Missão autonarrada média** | 60+ linhas | 250 |
 | **Missão autonarrada difícil** | 80+ linhas | 350 |
 | Limite de missões autonarradas | **2 por semana** (somando as três) | — |
-| **Missão narrada** | conduzida pela administração | 300 / 450 / 650 / 900 / 1.200 / 1.500 (pelo reino) |
+| **Missão narrada** | conduzida pela administração | 300 / 450 / 650 / 900 / 1.200 / 1.500 / 1.800 / 2.100 / 2.500 (pelo reino) |
 | **Duelo vencido contra player** | 1 por semana por oponente | 200 |
 | **Evento** | conforme o evento | 500 a 3.000 |
 | **Gargalo superado** | ao avançar de reino | +500 |
@@ -32,7 +32,7 @@ ideograma: 道
 - **Foco definido:** "Aperfeiçoar a Guarda da Nuvem Parada", "Abrir o meridiano do Rim", "Aprender a técnica do manual X".
 - **Progressão:** o personagem começa num ponto e termina em outro.
 - **Corpo e mente:** dor, cansaço, dúvida, pequenas descobertas.
-- **Sem preenchimento:** repetir "ele treinou mais" para chegar a 80 linhas é recusado.
+- **Sem preenchimento:** repetir "ele treinou mais" para chegar a 20 linhas é recusado. Vinte linhas boas valem mais que oitenta vazias.
 
 ## PA: pontos de atributo
 

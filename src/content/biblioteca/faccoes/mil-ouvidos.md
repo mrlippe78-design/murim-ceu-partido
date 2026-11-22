@@ -10,6 +10,12 @@ ideograma: 耳
 
 Por fora, é a casa de chá mais elegante da capital. Por dentro, é um mercado de informação: quem dormiu com quem, que seita está falida, onde fica o esconderijo de um procurado. O Pavilhão não toma partido. Vende para todos.
 
+## História
+
+O Pavilhão dos Mil Ouvidos abriu as portas no Ano 12, no Bairro das Mil Lanternas, como a casa de chá mais elegante da capital. Em um ano, todos sabiam que ali se compravam segredos. Em dois, todos sabiam que ali também se vendiam os segredos de quem comprava.
+
+A dona é conhecida como a **Senhora das Persianas**, porque só fala com clientes por trás de uma cortina de bambu. O Pavilhão sobreviveu a duas tentativas de fechamento da Corte, três incêndios e um cerco do Pavilhão Sem Rosto, porque sempre tinha algo a oferecer a quem vinha destruí-lo. Os registros da Irmandade das Sandálias de Palha mostram que o dinheiro da fundação veio do Oeste Vermelho, um ano depois de o Soberano de Sangue desaparecer.
+
 ## Vantagem e obrigação
 
 - **Vantagem:** **1 segredo de NPC por mês.** Escolha um NPC; a administração revela algo verdadeiro e útil sobre ele.

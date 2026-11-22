@@ -1,5 +1,13 @@
 [
   {
+    "id": "2026-11-22-reinos-e-seitas",
+    "data": "2026-11-22",
+    "titulo": "Novos reinos, treino de 20 linhas e a história de cada seita",
+    "mudou": "Vida e Morte agora se alcança por PE, e foram criados o Reino Natural e a Harmonia Celeste (o Imortal Marcial só por evento). O treino passa a exigir 20 linhas, não 80. Cada seita ganhou sua história, e entraram duas seitas novas: o Convento da Lótus de Jade e o Clã Geum. Novas páginas: O gênero murim, Caminho da arma, Respiração e reclusão, Hierarquia e costumes e Títulos do Jianghu.",
+    "porque": "Os jogadores precisam de mais degraus para subir. Treinos curtos e bem escritos valem mais que textos inflados. E as seitas precisavam de passado para render boas cenas.",
+    "paginas": ["cultivo/reinos", "evolucao/pe-e-progresso", "comece/o-genero-murim", "cultivo/caminho-da-arma", "faccoes/lotus-jade", "faccoes/geum"]
+  },
+  {
     "id": "2026-11-22-abertura",
     "data": "2026-11-22",
     "titulo": "A biblioteca abriu as portas",

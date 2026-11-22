@@ -10,6 +10,12 @@ ideograma: 謀
 
 O Mo-Ryeong não forma guerreiros, forma generais. Seus membros estudam formações de batalha, logística, cerco e psicologia. Na Guerra do Eclipse, foram as formações do clã que seguraram o centro da Aliança no Planalto da Lua Rubra.
 
+## História
+
+Os Mo-Ryeong descendem de um estrategista que serviu três imperadores e foi exilado pelo quarto por acertar demais. No exílio, ensinou os filhos a ler o terreno como se lê um livro e fundou a Torre dos Cem Tabuleiros, onde cada sala guarda uma batalha famosa reproduzida em peças de jade.
+
+No Ano −1, o atual patriarca, **Ji-an**, entregou à Aliança um relatório que previa a marcha do Culto com quatro meses de antecedência. Foi ignorado. Na Guerra do Eclipse, as formações do clã salvaram o centro da Aliança no Planalto da Lua Rubra, e Ji-an perdeu a visão de um olho para uma flecha. Desde então, o clã ajuda a Aliança só quando é pago, e ninguém mais ousa ignorar seus relatórios.
+
 ## Vantagem e obrigação
 
 - **Vantagem:** em combate em grupo, **aliados recebem +5% de Precisão** enquanto o membro do clã estiver de pé e coordenando.

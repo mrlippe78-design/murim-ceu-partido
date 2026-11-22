@@ -11,6 +11,12 @@ imagem: regiao-montanhas
 
 Andarilhos são artistas marciais que recusaram (ou perderam) uma seita. Vivem de trabalhos avulsos, duelos de exibição, caridade e roubo. São livres de um jeito que nenhum discípulo é, e pagam caro por isso.
 
+## História
+
+Os Andarilhos não têm história própria, porque não são uma seita: são todos os que saíram de uma, ou nunca entraram. Há andarilhos desde que existe o Jianghu. Alguns viraram lendas. A mais famosa de todas é a **Espada Sem Nome**, que nunca aceitou título nem mestre e venceu três patriarcas numa semana no Ano −14.
+
+Depois da Guerra do Eclipse, o número de andarilhos explodiu: discípulos de seitas destruídas, soldados sem tropa, órfãos com uma espada herdada. Eles se reconhecem por pequenos códigos: um nó na faixa da cintura, uma forma de pedir água numa estalagem. Não têm chefe, mas têm memória. Quando um deles morre na estrada, os outros fazem questão de saber quem foi.
+
 ## Vantagem e obrigação
 
 - **Vantagem:** **aprendem técnicas de qualquer facção**, desde que encontrem quem ensine (ou um manual).

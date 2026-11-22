@@ -12,9 +12,9 @@ O jogo roda em **semanas reais** (de segunda a domingo, horário de Brasília). 
 
 | O quê | Quantos por semana | Tamanho mínimo | Recompensa |
 |---|---|---|---|
-| Treino com foco definido | 3 | 80 linhas | PE por reino (150 a 600) |
+| Treino com foco definido | 3 | 20 linhas | PE por reino (150 a 900) |
 | Missão autonarrada | 2 | 40, 60 ou 80 linhas | 150, 250 ou 350 PE |
-| Missão narrada pela administração | conforme a agenda | — | 300 a 1.500 PE por reino |
+| Missão narrada pela administração | conforme a agenda | — | 300 a 2.500 PE por reino |
 | Duelo vencido contra outro player | 1 por oponente | — | 200 PE |
 
 Treinos e missões autonarradas são **enviados pelo site** (o contador de linhas é automático) e entram numa fila. A administração aprova, ajusta ou recusa. O PE só aparece na ficha depois da aprovação.

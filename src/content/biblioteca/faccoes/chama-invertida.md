@@ -10,6 +10,12 @@ ideograma: 焰
 
 A Chama Invertida descobriu como converter a força vital em energia de combate. Seus membros são temidos porque nunca ficam sem Qi, e são lamentados porque morrem jovens.
 
+## História
+
+A Chama Invertida era uma seita pequena de piromantes do deserto até que um de seus mestres descobriu como queimar a própria força vital no lugar do Qi. A técnica tornou seus discípulos incansáveis em combate e velhos aos trinta anos. O Soberano de Sangue os recrutou como tropa de choque, e foram eles que abriram as muralhas das três cidades tomadas no Eclipse.
+
+Depois da guerra, a Aliança fez uma purga nas aldeias do oeste suspeitas de abrigar a seita. **Yeom-hwa**, então com sete anos, viu a família inteira morrer numa delas. Hoje ela comanda a Chama Invertida e tem menos de um ano de vida, segundo os próprios médicos da seita. Seu plano é simples: queimar uma cidade da Aliança para cada parente que perdeu, antes que o próprio fogo a consuma.
+
 ## Vantagem e obrigação
 
 - **Vantagem:** pode **gastar Vida no lugar de Qi** para usar técnicas (1 ponto de Vida por 1 de Qi).

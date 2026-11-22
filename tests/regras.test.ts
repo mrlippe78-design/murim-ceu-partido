@@ -198,6 +198,14 @@ describe('progresso e gargalo', () => {
     expect(piorDesvio([6, 3])).toBe(3);
     expect(piorDesvio([2, 1])).toBe(1);
   });
+  it('novos reinos: Profundo → Vida e Morte → Natural → Harmonia Celeste por PE; Imortal só por evento', () => {
+    expect(progresso(155000, 'profundo').proximo).toMatchObject({ reino: 'vida_morte', pe: 185000 });
+    expect(progresso(260000, 'vida_morte').proximo).toMatchObject({ reino: 'natural', pe: 310000 });
+    expect(progresso(430000, 'natural').proximo).toMatchObject({ reino: 'harmonia', pe: 510000 });
+    const topo = progresso(700000, 'harmonia');
+    expect(topo.proximo?.reino).toBe('imortal');
+    expect(topo.semanas).toBeNull();
+  });
   it('conta linhas não vazias', () => {
     expect(contarLinhas('a\n\n b \r\n\n c')).toBe(3);
   });

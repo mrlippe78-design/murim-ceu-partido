@@ -10,6 +10,12 @@ ideograma: 花
 
 O Clã Hwa cultiva o jardim mais bonito do império, e metade das plantas é venenosa. Seus membros são diplomatas impecáveis, envenenadores pacientes e mestres de armas ocultas: agulhas, dardos, leques com lâminas.
 
+## História
+
+O Clã Hwa começou como uma família de boticários que fornecia remédios à Corte. Percebeu cedo que a mesma erva que cura também mata, e que pagavam mais pela segunda. Em três gerações, os Hwa tinham a melhor coleção de venenos do império e um jardim que todos admiram de longe.
+
+A família sempre jogou dos dois lados. Na Guerra do Eclipse, vendeu antídotos para a Aliança e, segundo boatos, venenos para o Culto. No Ano 28, quando a cidade de Dongcheon morreu envenenada, os peritos imperiais encontraram traços de uma flor que só cresce na Mansão das Mil Flores. Antes que alguém perguntasse, o Vale dos Cem Venenos assumiu a culpa. A matriarca **Hwa Yeon-ji** mandou flores ao funeral coletivo.
+
 ## Vantagem e obrigação
 
 - **Vantagem:** +1 técnica de veneno (Oculta, Básica) além das técnicas normais da criação.

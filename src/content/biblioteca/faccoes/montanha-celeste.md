@@ -10,6 +10,12 @@ ideograma: 雲
 
 A Montanha Celeste ensina que a espada é um pincel e o combate é caligrafia: cada golpe deve ser necessário, limpo e bonito. Seus discípulos vestem branco e azul-cinza e treinam ao amanhecer, nos degraus de pedra acima das nuvens.
 
+## História
+
+A seita diz ter sido fundada na Era dos Fundadores por uma eremita que passou quarenta anos copiando o voo das garças no Pico da Garça. Dela vem o **Sutra da Nuvem Parada** e a ideia de que a espada é um pincel. No Ano −120, a então patriarca foi a primeira a assinar o Pacto da Espada Embainhada, e a seita nunca deixou ninguém esquecer disso.
+
+Na Guerra do Eclipse, a Montanha Celeste mandou trinta mestres ao Planalto da Lua Rubra e recebeu doze de volta. O atual patriarca, **Un-hak**, voltou com o braço esquerdo inútil e a reputação intacta. Nos anos da Paz das Cinzas, a seita reconstruiu os degraus e recuperou prestígio, mas perdeu a geração que deveria sucedê-lo. Hoje é governada por velhos e defendida por jovens, sem quase ninguém no meio.
+
 ## Vantagem e obrigação
 
 - **Vantagem:** +10% de recuperação de Qi (a recuperação de 10% por turno vira 11%; meditação também fica mais rápida).
