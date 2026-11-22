@@ -1,0 +1,7 @@
+import{b as e,n as t,x as n}from"./regras.Bor_20To.js";var r=e=>document.getElementById(e),i=e=>t.estagios.find(t=>t.chave===e)?.nome;function a(){let t=Math.max(0,Number(r(`pe`).value)||0),a=n(r(`reino`).value),o=Math.round((a.treino??0)*(1+Number(r(`bonus`).value)/100)),s=Number(r(`treinos`).value)*o+Number(r(`missoes`).value)+Number(r(`extra`).value),c=e(t,a.chave,void 0,s),l=c.proximo;document.getElementById(`saida`).innerHTML=`
+      <p class="rotulo">Você está em</p><p class="grande">${a.nome} ${i(c.estagio)}</p>
+      ${l&&Number.isFinite(l.pe)?`
+        <p class="rotulo">Próximo</p><p class="grande">${n(l.reino).nome} ${i(l.estagio)} <span class="mudo">(${l.pe.toLocaleString(`pt-BR`)} PE)</span></p>
+        <dl class="numeros"><div><dt>Faltam</dt><dd>${c.falta.toLocaleString(`pt-BR`)} PE</dd></div><div><dt>Ritmo</dt><dd>${s.toLocaleString(`pt-BR`)}/sem.</dd></div><div><dt>Estimativa</dt><dd>${c.semanas??`—`} semana${c.semanas===1?``:`s`}</dd></div><div><dt>Treino vale</dt><dd>${o} PE</dd></div></dl>
+        ${c.precisaGargalo?`<p class="nota">Para mudar de reino é preciso romper o <a href="../../biblioteca/cultivo/gargalo/">gargalo</a>: pedido de avanço de 40+ linhas e 3d6 no servidor. Ao avançar, você ganha +500 PE.</p>`:``}`:`<p class="nota">O próximo reino só é alcançado por evento.</p>`}
+      ${t<(a.pe?.[0]??0)?`<p class="erro">Com ${t} PE você ainda não chegou ao estágio Inicial de ${a.nome} (${a.pe?.[0]} PE).</p>`:``}`}document.getElementById(`form`).addEventListener(`input`,a),a();

@@ -1,0 +1,1 @@
+import{n as e}from"./global.CV8tprj-.js";e();

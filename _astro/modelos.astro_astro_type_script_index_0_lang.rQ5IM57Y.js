@@ -1,0 +1,1 @@
+import{t as e}from"./global.CV8tprj-.js";document.querySelectorAll(`[data-copiar]`).forEach(t=>t.addEventListener(`click`,()=>e(document.getElementById(`m-${t.dataset.copiar}`).textContent??``)));

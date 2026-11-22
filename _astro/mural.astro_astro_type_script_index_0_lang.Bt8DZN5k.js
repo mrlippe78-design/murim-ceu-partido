@@ -1,0 +1,4 @@
+import{a as e,g as t,l as n,o as r}from"./app.D0Q0hGTF.js";var i={aviso:`Aviso`,promocao:`Promoção de reino`,lendario:`Leitura Lendária`,mitico:`LEITURA MÍTICA`,morte:`Morte`,conquista:`Conquista`,regra:`Regra nova`},{data:a}=await t.from(`mural`).select(`*`).order(`criado_em`,{ascending:!1}).limit(80);document.getElementById(`mural`).innerHTML=(a??[]).map(t=>`
+    <li class="cartaz t-${r(t.tipo)}"><p class="rotulo">${r(i[t.tipo]??t.tipo)} · <time>${e(t.criado_em)}</time></p>
+      <h2>${r(t.titulo)}</h2>${t.corpo?`<p>${r(t.corpo)}</p>`:``}
+      ${t.personagem?`<a href="${n(`/personagem/?id=${t.personagem}`)}">Ver o personagem</a>`:``}</li>`).join(``)||`<li class="mudo">O mural ainda está vazio. A primeira história começa quando você chegar.</li>`;

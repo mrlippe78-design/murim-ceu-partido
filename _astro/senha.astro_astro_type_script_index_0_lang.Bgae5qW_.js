@@ -1,0 +1,1 @@
+import{r as e}from"./global.CV8tprj-.js";import{g as t,l as n,t as r}from"./app.D0Q0hGTF.js";r(`#form`).addEventListener(`submit`,async i=>{i.preventDefault();let{error:a}=await t.auth.updateUser({password:r(`#senha`).value});if(a)return e(`Link expirado ou inválido. Peça outro na tela de entrada.`,!0);e(`Senha alterada.`),setTimeout(()=>location.href=n(`/conta/`),1200)});
