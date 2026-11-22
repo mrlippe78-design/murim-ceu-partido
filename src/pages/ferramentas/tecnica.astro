@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import dados from '../../../supabase/functions/_shared/dados.json';
+---
+<Base titulo="Calculadora de técnica" descricao="Escolha o grau, divida o bônus, defina Qi e recarga. O site avisa se passou do orçamento e gera o texto pronto para o WhatsApp.">
+  <div class="envoltorio pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">招</span>
+      <p class="rotulo">Ferramentas</p>
+      <h1>Calculadora de técnica</h1>
+      <p class="lead">Escolha o grau, divida o bônus entre os atributos e defina o custo. Se passar do orçamento, você fica sabendo na hora.</p>
+    </header>
+    <div class="calc">
+      <form id="form-tec" class="painel" onsubmit="return false">
+        <div class="grade-campos">
+          <div class="campo"><label for="nome">Nome da técnica</label><input id="nome" maxlength="80" placeholder="Corte da Primeira Chuva" /></div>
+          <div class="campo"><label for="grau">Grau</label><select id="grau">{dados.graus.map((g) => <option value={g.chave}>{g.nome} (+{g.bonus})</option>)}</select></div>
+          <div class="campo"><label for="tipo">Tipo</label><select id="tipo">{dados.tiposArte.filter((t) => t.chave !== 'interna').map((t) => <option value={t.chave}>{t.nome}</option>)}</select></div>
+        </div>
+        <div class="grade-campos">
+          <label class="opcao" style="padding:1rem 1rem 1rem 3rem"><input type="checkbox" id="defensiva" /><strong style="font-size:1.05rem">Defensiva</strong><span class="det">+20% de orçamento</span></label>
+          <div class="campo"><label for="reino">Reino de quem usa</label><select id="reino">{dados.reinos.filter((r) => r.pe).map((r) => <option value={r.chave}>{r.nome}</option>)}</select></div>
+        </div>
+        <p class="rotulo ouro" id="orcamento">Orçamento</p>
+        <div class="barra"><span id="barra"></span></div>
+        <div class="grade-campos cinco">
+          {dados.atributos.map((a) => <div class="campo"><label for={`d-${a.chave}`}>{a.nome}</label><input type="number" id={`d-${a.chave}`} data-attr={a.chave} min="0" step="10" value="0" /></div>)}
+        </div>
+        <div class="grade-campos">
+          <div class="campo"><label for="qi">Custo de Qi <span id="faixa-qi" class="sutil"></span></label><input type="number" id="qi" min="0" value="80" /></div>
+          <div class="campo"><label for="recarga">Recarga (turnos)</label><input type="number" id="recarga" min="1" max="6" value="1" /></div>
+          <div class="campo"><label for="efeitos">Efeito <span id="faixa-ef" class="sutil"></span></label><input id="efeitos" maxlength="200" /></div>
+        </div>
+        <div class="campo"><label for="descricao">Descrição curta</label><input id="descricao" maxlength="240" /></div>
+      </form>
+      <div>
+        <ul id="erros" class="lista-erros"></ul>
+        <p id="ok" class="ok" hidden>Dentro do orçamento.</p>
+        <pre id="texto" class="texto-pronto"></pre>
+        <button class="btn" id="copiar">Copiar para o WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { avaliarTecnica, grau, type Tecnica, ATRIBUTOS } from '../../../supabase/functions/_shared/regras';
+  import { copiar } from '../../scripts/global';
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  function ler(): Tecnica {
+    return {
+      nome: $('nome').value, grau: $('grau').value, tipo: $('tipo').value, defensiva: $('defensiva').checked,
+      distribuicao: Object.fromEntries(ATRIBUTOS.map((k) => [k, Number($(`d-${k}`).value) || 0])),
+      custoQi: Number($('qi').value), recarga: Number($('recarga').value), efeitos: $('efeitos').value, descricao: $('descricao').value,
+    };
+  }
+  function atualizar() {
+    const t = ler();
+    const g = grau(t.grau)!;
+    const a = avaliarTecnica(t, $('reino').value);
+    $('faixa-qi').textContent = `(${g.qiMin}–${g.qiMax})`;
+    $('faixa-ef').textContent = `(${g.efeitos})`;
+    $('orcamento').textContent = `Bônus usado: ${a.usado} de ${a.limite}`;
+    const barra = document.getElementById('barra')!;
+    barra.style.width = `${Math.min(100, (a.usado / Math.max(1, a.limite)) * 100)}%`;
+    barra.parentElement!.classList.toggle('estourou', a.usado > a.limite);
+    const erros = a.erros.filter((e) => !(e.includes('nome') && !t.nome));
+    document.getElementById('erros')!.innerHTML = erros.map((e) => `<li>${e.replace(/</g, '&lt;')}</li>`).join('');
+    document.getElementById('ok')!.hidden = erros.length > 0;
+    document.getElementById('texto')!.textContent = a.texto;
+  }
+  $('grau').addEventListener('change', () => { const g = grau($('grau').value)!; $('qi').value = String(g.qiMin); $('recarga').value = String(g.recarga); atualizar(); });
+  document.getElementById('form-tec')!.addEventListener('input', atualizar);
+  document.getElementById('copiar')!.addEventListener('click', () => copiar(document.getElementById('texto')!.textContent ?? ''));
+  atualizar();
+</script>
+
+<style>
+  .calc { display: grid; gap: 1.5rem; }
+  @media (min-width: 1000px) { .calc { grid-template-columns: 1.3fr 1fr; align-items: start; } .calc > div { position: sticky; top: calc(var(--topo) + 1rem); } }
+  .grade-campos { display: grid; gap: .8rem; }
+  @media (min-width: 700px) { .grade-campos { grid-template-columns: repeat(3, 1fr); } .grade-campos.cinco { grid-template-columns: repeat(5, 1fr); } }
+  .barra { height: .6rem; background: var(--tinta-4); margin: .4rem 0 1rem; position: relative; overflow: hidden; }
+  .barra span { position: absolute; inset: 0 auto 0 0; background: var(--jade); transition: width .2s; }
+  .barra.estourou span { background: var(--sangue-vivo); }
+  .opcao { position: relative; display: block; border: var(--borda); background: var(--tinta); cursor: pointer; margin: 0; color: var(--papel); align-self: end; }
+  .opcao input { position: absolute; left: 1rem; top: 1.15rem; }
+  .opcao strong { display: block; font-family: var(--f-display); font-weight: 400; }
+  .opcao .det { font: .9rem var(--f-ui); color: var(--papel-2); }
+  .texto-pronto { white-space: pre-wrap; font: .95rem/1.5 ui-monospace, Consolas, monospace; background: var(--tinta-2); border: var(--borda); padding: 1rem; min-height: 8rem; }
+</style>

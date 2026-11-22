@@ -1,0 +1,76 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/caminhos';
+import dados from '../../../supabase/functions/_shared/dados.json';
+---
+<Base titulo="Rolador de dados" descricao="3d6 para Gargalo e 1d6 para Desvio de Qi, com o resultado interpretado pela tabela.">
+  <div class="estreito pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">骰</span>
+      <p class="rotulo">Ferramentas</p>
+      <h1>Rolador de dados</h1>
+      <p class="lead">Para treinar e tirar dúvidas. <strong>Rolagens oficiais</strong> são feitas no perfil do personagem e ficam registradas no servidor.</p>
+    </header>
+
+    <section class="painel">
+      <h2 style="margin-top:0">Gargalo · 3d6</h2>
+      <div class="linha-flex"><label for="mod" style="margin:0">Modificador total</label><input id="mod" type="number" value="0" min="-10" max="10" style="width:6rem" />
+        <button class="btn" id="rolar3">Rolar 3d6</button></div>
+      <div class="dados" id="dados3" aria-live="polite"></div>
+      <p id="res3" class="resultado"></p>
+    </section>
+
+    <section class="painel" style="margin-top:1.5rem">
+      <h2 style="margin-top:0">Desvio de Qi · 1d6</h2>
+      <div class="linha-flex"><label class="check"><input type="checkbox" id="duplo" /> Dantian Duplo (rola 2, fica com o pior)</label>
+        <button class="btn" id="rolar1">Rolar 1d6</button></div>
+      <div class="dados" id="dados1" aria-live="polite"></div>
+      <p id="res1" class="resultado"></p>
+    </section>
+
+    <h2>Tabelas</h2>
+    <div class="tabela-rolagem"><table><thead><tr><th>3d6 + mod.</th><th>Resultado</th></tr></thead><tbody>
+      <tr><td>12 ou mais</td><td>Avança de reino</td></tr><tr><td>8 a 11</td><td>Falha sem dano (nova tentativa em 1 semana)</td></tr><tr><td>7 ou menos</td><td>Desvio de Qi (role 1d6)</td></tr>
+    </tbody></table></div>
+    <div class="tabela-rolagem"><table><thead><tr><th>1d6</th><th>Desvio</th><th>Efeito</th></tr></thead><tbody>
+      {dados.gargalo.desvio.map((d) => <tr><td>{d.face}</td><td>{d.nome}</td><td>{d.texto}</td></tr>)}
+    </tbody></table></div>
+    <p class="mudo">Regras completas: <a href={url('/biblioteca/cultivo/gargalo/')}>Gargalo</a> e <a href={url('/biblioteca/cultivo/desvio-de-qi/')}>Desvio de Qi</a>.</p>
+  </div>
+</Base>
+
+<script>
+  import { interpretarGargalo, piorDesvio, desvio } from '../../../supabase/functions/_shared/regras';
+  import { rngCripto } from '../../../supabase/functions/_shared/destino';
+  const FACES = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+  const reduzir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  async function mostrar(alvo: HTMLElement, valores: number[]) {
+    alvo.innerHTML = valores.map(() => '<span class="dado girando">⚀</span>').join('');
+    if (!reduzir) for (let i = 0; i < 8; i++) { alvo.querySelectorAll('.dado').forEach((d) => (d.textContent = FACES[rngCripto(6)])); await new Promise((r) => setTimeout(r, 60)); }
+    alvo.querySelectorAll('.dado').forEach((d, i) => { d.textContent = FACES[valores[i] - 1]; d.classList.remove('girando'); d.setAttribute('aria-label', `dado ${valores[i]}`); });
+  }
+  document.getElementById('rolar3')!.addEventListener('click', async () => {
+    const v = [1, 2, 3].map(() => rngCripto(6) + 1);
+    const mod = Number((document.getElementById('mod') as HTMLInputElement).value) || 0;
+    await mostrar(document.getElementById('dados3')!, v);
+    const total = v[0] + v[1] + v[2] + mod;
+    const r = interpretarGargalo(total);
+    document.getElementById('res3')!.innerHTML = `<strong>${v.join(' + ')}${mod ? ` ${mod > 0 ? '+' : '−'} ${Math.abs(mod)}` : ''} = ${total}</strong> · ${r === 'avanco' ? '<span class="ok">Avança!</span>' : r === 'falha' ? 'Falha sem dano.' : '<span class="erro">Desvio de Qi: role 1d6.</span>'}`;
+  });
+  document.getElementById('rolar1')!.addEventListener('click', async () => {
+    const duplo = (document.getElementById('duplo') as HTMLInputElement).checked;
+    const v = duplo ? [rngCripto(6) + 1, rngCripto(6) + 1] : [rngCripto(6) + 1];
+    await mostrar(document.getElementById('dados1')!, v);
+    const f = piorDesvio(v);
+    const d = desvio(f);
+    document.getElementById('res1')!.innerHTML = `<strong>${f} · ${d.nome}</strong>: ${d.texto}`;
+  });
+</script>
+
+<style>
+  .dados { display: flex; gap: .6rem; min-height: 4.5rem; margin: 1rem 0 .5rem; }
+  .dado { font-size: 4rem; line-height: 1; color: var(--papel); }
+  .dado.girando { color: var(--sangue-texto); }
+  .resultado { font: 1.15rem var(--f-ui); min-height: 1.6em; }
+  .check { display: flex; gap: .5rem; align-items: center; margin: 0; }
+</style>

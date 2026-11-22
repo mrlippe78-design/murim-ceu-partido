@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/caminhos';
+---
+<Base titulo="Sem conexão" noindex>
+  <div class="estreito pagina">
+    <p class="rotulo">Sem sinal na montanha</p>
+    <h1>Você está offline</h1>
+    <p class="lead">Esta página ainda não foi guardada no seu celular. As regras que você já abriu (e a biblioteca, se você a baixou) continuam disponíveis.</p>
+    <a class="btn" href={url('/biblioteca/')}>Abrir a biblioteca</a>
+  </div>
+</Base>

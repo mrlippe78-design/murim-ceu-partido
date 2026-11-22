@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/caminhos';
+---
+<Base titulo="Perdido no Jianghu" descricao="Esta página não existe.">
+  <div class="perdido envoltorio">
+    <span class="perdido-ideograma" aria-hidden="true">迷</span>
+    <p class="rotulo">Erro 404</p>
+    <h1>Você se perdeu no Jianghu…</h1>
+    <p class="lead">A trilha acaba num barranco, a névoa sobe e um corvo ri de você. Esta página não existe, ou foi levada pelos Sem Bandeira.</p>
+    <div class="linha-flex">
+      <a class="btn" href={url('/')}>Voltar ao portão</a>
+      <a class="btn fantasma" href={url('/buscar/')}>Procurar o caminho</a>
+    </div>
+  </div>
+</Base>
+<style>
+  .perdido { position: relative; min-height: 70vh; display: grid; align-content: center; padding: 4rem 0; overflow: hidden; }
+  .perdido-ideograma { position: absolute; right: -2rem; top: 50%; transform: translateY(-50%); font: 400 clamp(14rem, 50vw, 34rem)/1 var(--f-display); color: var(--sangue); opacity: .15; z-index: -1; }
+  .perdido h1 { max-width: 14ch; }
+  .lead { max-width: 40ch; color: var(--papel-2); font-size: 1.2rem; margin-bottom: 2rem; }
+</style>

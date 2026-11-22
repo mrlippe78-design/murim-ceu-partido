@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base titulo="Calendário" descricao="Eventos, torneios e leilões de Murim: Céu Partido, com contagem regressiva.">
+  <div class="estreito pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">曆</span>
+      <p class="rotulo">Almanaque</p>
+      <h1>Calendário</h1>
+      <p class="lead">Datas no horário de Brasília. A contagem atualiza sozinha.</p>
+    </header>
+    <ol class="eventos" id="eventos"><li class="mudo">Consultando os astros…</li></ol>
+  </div>
+</Base>
+<script>
+  import { supabase, esc } from '../scripts/app';
+  const { data } = await supabase.from('eventos').select('*').order('inicio');
+  const agora = Date.now();
+  const futuros = (data ?? []).filter((e) => new Date(e.inicio).getTime() > agora - 864e5);
+  const lista = document.getElementById('eventos')!;
+  lista.innerHTML = futuros.map((e) => `<li class="evento"><p class="rotulo ouro">${esc(e.tipo)}</p><h2>${esc(e.titulo)}</h2>
+    <p class="quando">${new Date(e.inicio).toLocaleString('pt-BR', { dateStyle: 'full', timeStyle: 'short', timeZone: 'America/Sao_Paulo' })}</p>
+    <p class="contagem" data-inicio="${e.inicio}"></p>${e.descricao ? `<p>${esc(e.descricao)}</p>` : ''}</li>`).join('') || '<li class="mudo">Nenhum evento marcado. Fique de olho no mural.</li>';
+  const tick = () => document.querySelectorAll<HTMLElement>('.contagem').forEach((c) => {
+    const d = new Date(c.dataset.inicio!).getTime() - Date.now();
+    if (d <= 0) { c.textContent = 'Acontecendo agora.'; return; }
+    const dias = Math.floor(d / 864e5), h = Math.floor((d % 864e5) / 36e5), m = Math.floor((d % 36e5) / 6e4), s = Math.floor((d % 6e4) / 1e3);
+    c.textContent = `${dias}d ${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+  });
+  tick();
+  setInterval(tick, 1000);
+</script>
+<style is:global>
+  .eventos { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.2rem; }
+  .evento { padding: 1.3rem; border: var(--borda); background: var(--tinta-2); }
+  .evento h2 { margin: .2rem 0; font-size: 1.6rem; }
+  .quando { color: var(--papel-2); font: 1rem var(--f-ui); margin-bottom: .3rem; }
+  .contagem { font: 700 1.6rem var(--f-ui); font-variant-numeric: tabular-nums; color: var(--sangue-texto); }
+</style>

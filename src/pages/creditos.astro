@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import imagens from '../../assets-originais/creditos.json';
+const bibliotecas = [
+  ['Astro', '7.4', 'MIT', 'https://github.com/withastro/astro', 'Gerador do site estático'],
+  ['Supabase JS', '2.119', 'MIT', 'https://github.com/supabase/supabase-js', 'Login, banco de dados e chamadas ao servidor'],
+  ['Supabase (Auth, Postgres, Edge Functions)', 'serviço', 'Apache-2.0 (código aberto)', 'https://github.com/supabase/supabase', 'Hospedagem do banco e do sorteio'],
+  ['Pagefind', '1.6', 'MIT', 'https://github.com/Pagefind/pagefind', 'Busca estática no site'],
+  ['@astrojs/markdown-remark', '7.3', 'MIT', 'https://github.com/withastro/astro', 'Processamento do Markdown (glossário automático)'],
+  ['sharp', '0.35', 'Apache-2.0', 'https://github.com/lovell/sharp', 'Otimização das imagens em WebP'],
+  ['Vitest', '5.1', 'MIT', 'https://github.com/vitest-dev/vitest', 'Testes das regras'],
+  ['Playwright', '1.65', 'Apache-2.0', 'https://github.com/microsoft/playwright', 'Testes no navegador e prévias de link'],
+  ['Lighthouse', '13', 'Apache-2.0', 'https://github.com/GoogleChrome/lighthouse', 'Medição de desempenho e acessibilidade'],
+];
+const fontes = [
+  ['Zen Antique', 'Yoshimichi Ohira', 'SIL Open Font License 1.1', 'https://github.com/googlefonts/zen-antique'],
+  ['Alegreya', 'Juan Pablo del Peral (Huerta Tipográfica)', 'SIL Open Font License 1.1', 'https://github.com/huertatipografica/Alegreya'],
+  ['Alegreya Sans', 'Juan Pablo del Peral (Huerta Tipográfica)', 'SIL Open Font License 1.1', 'https://github.com/huertatipografica/Alegreya-Sans'],
+];
+---
+<Base titulo="Créditos" descricao="Imagens, fontes e bibliotecas de código aberto usadas no site, com autores e licenças.">
+  <div class="estreito pagina prosa">
+    <h1>Créditos</h1>
+    <p>Murim: Céu Partido é um projeto pessoal e acadêmico, sem fins comerciais. Todo o texto do RPG (mundo, seitas, NPCs, regras) é original. Os ideogramas, selos, mapa, diagrama de meridianos e efeitos visuais foram desenhados para o site em SVG e CSS. O som ambiente é sintetizado no navegador (Web Audio), sem arquivos de terceiros.</p>
+    <h2>Imagens</h2>
+    <p>Pinturas antigas em domínio público, obtidas no Wikimedia Commons e convertidas em WebP.</p>
+    <ul>
+      {imagens.map((i) => <li><strong>{i.arquivo.replace(/^File:/, '').replace(/\.[a-z]+$/i, '')}</strong>, {i.autor || 'autor desconhecido'}. {i.licenca}. <a href={i.fonte} rel="noopener">Fonte</a></li>)}
+    </ul>
+    <h2>Fontes tipográficas</h2>
+    <ul>{fontes.map(([n, a, l, u]) => <li><strong>{n}</strong>, de {a}. {l}. <a href={u} rel="noopener">Repositório</a></li>)}</ul>
+    <h2>Código aberto</h2>
+    <div class="tabela-rolagem"><table><thead><tr><th>Projeto</th><th>Versão</th><th>Licença</th><th>Uso</th></tr></thead><tbody>
+      {bibliotecas.map(([n, v, l, u, x]) => <tr><td><a href={u} rel="noopener">{n}</a></td><td>{v}</td><td>{l}</td><td>{x}</td></tr>)}
+    </tbody></table></div>
+    <p>A lista completa, com as licenças, está em <code>CREDITS.md</code> no repositório.</p>
+  </div>
+</Base>

@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { url } from '../../lib/caminhos';
+import { ferramentas } from '../../data/navegacao';
+---
+<Base titulo="Ferramentas" descricao="Calculadora de técnica, de progresso, rolador de dados, modelos para o WhatsApp e mais.">
+  <div class="envoltorio pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">器</span>
+      <p class="rotulo">Arsenal</p>
+      <h1>Ferramentas</h1>
+      <p class="lead">Tudo o que ajuda a jogar sem errar conta.</p>
+    </header>
+    <ol class="indice-ferramentas">
+      {ferramentas.map((f) => (
+        <li><a href={url(f.href)}><span class="f-nome">{f.nome}</span><span class="f-texto">{f.texto}</span></a></li>
+      ))}
+    </ol>
+  </div>
+</Base>
+<style>
+  .indice-ferramentas { list-style: none; padding: 0; margin: 0; columns: 1; }
+  @media (min-width: 800px) { .indice-ferramentas { columns: 2; column-gap: 4rem; } }
+  .indice-ferramentas li { break-inside: avoid; border-top: 1px solid var(--linha); }
+  .indice-ferramentas a { display: grid; padding: 1.1rem 0; text-decoration: none; }
+  .f-nome { font: 400 1.4rem var(--f-display); }
+  .f-texto { font: 1rem var(--f-ui); color: var(--papel-2); }
+  .indice-ferramentas a:hover .f-nome { color: var(--sangue-texto); }
+</style>

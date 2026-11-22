@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { MODELOS } from '../../lib/textos';
+---
+<Base titulo="Modelos para o WhatsApp" descricao="Ficha, técnica, treino, missão autonarrada e pedido de avanço prontos para copiar, com negrito e itálico do WhatsApp.">
+  <div class="estreito pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">帖</span>
+      <p class="rotulo">Ferramentas</p>
+      <h1>Modelos para o WhatsApp</h1>
+      <p class="lead">Copie, cole no grupo e preencha. No WhatsApp, *asteriscos* viram negrito e _sublinhados_ viram itálico.</p>
+    </header>
+    {Object.entries(MODELOS).map(([k, m]) => (
+      <section class="modelo">
+        <div class="linha-flex" style="justify-content:space-between"><h2>{m.titulo}</h2><button class="btn pequeno" data-copiar={k}>Copiar</button></div>
+        <pre id={`m-${k}`} class="texto-pronto">{m.texto}</pre>
+      </section>
+    ))}
+    <p class="nota">Já tem personagem aprovado? No perfil dele há um botão "Copiar ficha para o WhatsApp" com tudo preenchido.</p>
+  </div>
+</Base>
+<script>
+  import { copiar } from '../../scripts/global';
+  document.querySelectorAll<HTMLButtonElement>('[data-copiar]').forEach((b) => b.addEventListener('click', () => copiar(document.getElementById(`m-${b.dataset.copiar}`)!.textContent ?? '')));
+</script>
+<style>
+  .modelo { margin-bottom: 2rem; }
+  .modelo h2 { margin: 0; }
+  .texto-pronto { white-space: pre-wrap; font: .95rem/1.5 ui-monospace, Consolas, monospace; background: var(--tinta-2); border: var(--borda); padding: 1rem; margin-top: .8rem; }
+</style>

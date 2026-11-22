@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/caminhos';
+---
+<Base titulo="Listas do Jianghu" descricao="Lista dos Dragões Ascendentes e Lista dos Procurados, atualizadas pela administração.">
+  <div class="envoltorio pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">榜</span>
+      <p class="rotulo">Pavilhão dos Mil Ouvidos publica</p>
+      <h1>Listas do Jianghu</h1>
+      <p class="lead">Critérios em <a href={url('/biblioteca/sistemas/listas-do-jianghu/')}>Listas do Jianghu</a>.</p>
+    </header>
+    <div class="grade-2">
+      <section><h2>Dragões Ascendentes</h2><ol class="lista-rank" id="dragoes"><li class="mudo">…</li></ol></section>
+      <section><h2>Procurados</h2><ol class="lista-rank procurados" id="procurados"><li class="mudo">…</li></ol></section>
+    </div>
+  </div>
+</Base>
+<script>
+  import { supabase, esc, link } from '../scripts/app';
+  const { data } = await supabase.from('listas').select('*').order('posicao');
+  for (const k of ['dragoes', 'procurados']) {
+    const itens = (data ?? []).filter((i) => i.lista === k);
+    document.getElementById(k)!.innerHTML = itens.map((i) => `<li><span class="pos">${i.posicao}</span><span><strong>${i.personagem ? `<a href="${link(`/personagem/?id=${i.personagem}`)}">${esc(i.nome)}</a>` : esc(i.nome)}</strong>${i.detalhe ? `<br><span class="mudo">${esc(i.detalhe)}</span>` : ''}</span></li>`).join('') || '<li class="mudo">Ninguém ainda. O primeiro nome pode ser o seu.</li>';
+  }
+</script>
+<style is:global>
+  .lista-rank { list-style: none; padding: 0; margin: 0; }
+  .lista-rank li { display: grid; grid-template-columns: 3rem 1fr; gap: .8rem; padding: .8rem 0; border-bottom: 1px solid var(--linha); align-items: start; }
+  .lista-rank .pos { font: 400 1.8rem/1 var(--f-display); color: var(--ouro); text-align: right; }
+  .procurados .pos { color: var(--sangue-texto); }
+</style>

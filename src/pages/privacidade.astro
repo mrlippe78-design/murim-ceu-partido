@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+---
+<Base titulo="Privacidade" descricao="Que dados o site guarda, por quê, e como pedir a exclusão da conta (LGPD).">
+  <div class="estreito pagina prosa">
+    <h1>Privacidade</h1>
+    <p class="mudo">Última atualização: 22 de novembro de 2026. Projeto pessoal e acadêmico, sem fins comerciais.</p>
+    <h2>O que guardamos</h2>
+    <ul>
+      <li><strong>E-mail e senha</strong> (a senha é guardada cifrada pelo serviço de autenticação; ninguém da administração vê).</li>
+      <li><strong>Nome de exibição</strong>, que deve ser o seu nome no WhatsApp.</li>
+      <li><strong>Conteúdo de jogo:</strong> fichas, textos de treinos e missões, rolagens e Leituras do Destino.</li>
+      <li><strong>Registros técnicos</strong> mínimos de acesso, mantidos pelo provedor (Supabase) por segurança.</li>
+    </ul>
+    <p>Não pedimos telefone, CPF, endereço nem qualquer dado sensível. Não usamos cookies de rastreamento nem publicidade.</p>
+    <h2>Para que usamos</h2>
+    <p>Só para o jogo funcionar: identificar sua conta, guardar seus personagens e permitir que a administração aprove fichas e textos. Nada é vendido nem compartilhado com terceiros, além do provedor que hospeda o banco de dados (Supabase).</p>
+    <h2>O que é público</h2>
+    <p>Fichas <strong>aprovadas</strong> têm um perfil público (nome do personagem, atributos, história, diário). Seu e-mail e seu nome de exibição <strong>não</strong> aparecem nos perfis públicos. Rolagens oficiais e o mural são públicos dentro do site.</p>
+    <h2>Seus direitos (LGPD)</h2>
+    <p>Você pode pedir a qualquer momento: acesso aos seus dados, correção ou <strong>exclusão da conta</strong> e de tudo o que está ligado a ela. Para pedir, escreva para <a href={`mailto:${site.contatoAdmin.email}`}>{site.contatoAdmin.email}</a> ou fale com a administração no grupo. A exclusão é feita em até 15 dias. Registros de Leituras e rolagens de personagens apagados ficam anonimizados para manter a integridade do sorteio.</p>
+    <h2>Menores de idade</h2>
+    <p>O jogo tem temas sombrios (violência, morte). Recomendamos 16 anos ou mais.</p>
+  </div>
+</Base>

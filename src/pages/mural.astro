@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base titulo="Mural do Jianghu" descricao="Avisos, promoções de reino, Leituras Lendárias e Míticas, mortes e conquistas.">
+  <div class="estreito pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">告</span>
+      <p class="rotulo">Praça pública</p>
+      <h1>Mural do Jianghu</h1>
+      <p class="lead">Tudo o que o Jianghu inteiro precisa saber. Leituras Lendárias e Míticas aparecem aqui no mesmo minuto.</p>
+    </header>
+    <ol class="mural" id="mural"><li class="mudo">Lendo os cartazes…</li></ol>
+  </div>
+</Base>
+<script>
+  import { supabase, esc, data, link } from '../scripts/app';
+  const ROT: Record<string, string> = { aviso: 'Aviso', promocao: 'Promoção de reino', lendario: 'Leitura Lendária', mitico: 'LEITURA MÍTICA', morte: 'Morte', conquista: 'Conquista', regra: 'Regra nova' };
+  const { data: posts } = await supabase.from('mural').select('*').order('criado_em', { ascending: false }).limit(80);
+  document.getElementById('mural')!.innerHTML = (posts ?? []).map((p) => `
+    <li class="cartaz t-${esc(p.tipo)}"><p class="rotulo">${esc(ROT[p.tipo] ?? p.tipo)} · <time>${data(p.criado_em)}</time></p>
+      <h2>${esc(p.titulo)}</h2>${p.corpo ? `<p>${esc(p.corpo)}</p>` : ''}
+      ${p.personagem ? `<a href="${link(`/personagem/?id=${p.personagem}`)}">Ver o personagem</a>` : ''}</li>`).join('') || '<li class="mudo">O mural ainda está vazio. A primeira história começa quando você chegar.</li>';
+</script>
+<style is:global>
+  .mural { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.2rem; }
+  .cartaz { padding: 1.3rem 1.4rem; background: var(--tinta-2); border: var(--borda); border-left: 4px solid var(--linha); }
+  .cartaz h2 { margin: .3rem 0 .5rem; font-size: 1.5rem; }
+  .cartaz p:last-child { margin-bottom: 0; }
+  .t-morte { border-left-color: #6b6b6b; filter: grayscale(.6); }
+  .t-promocao, .t-conquista { border-left-color: var(--ouro); }
+  .t-lendario { border-left-color: var(--r-lendario); box-shadow: 0 0 30px -10px rgba(224,172,69,.5); }
+  .t-mitico { border-left-color: var(--r-mitico); background: linear-gradient(135deg, #2a0909, var(--tinta-2)); box-shadow: 0 0 40px -8px rgba(255,60,40,.6); }
+  .t-mitico h2 { color: #ffd2c8; }
+  .t-regra { border-left-color: var(--anil); }
+</style>

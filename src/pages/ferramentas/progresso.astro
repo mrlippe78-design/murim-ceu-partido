@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import dados from '../../../supabase/functions/_shared/dados.json';
+---
+<Base titulo="Calculadora de progresso" descricao="Informe o PE e o reino: veja quanto falta para o próximo estágio e uma estimativa de semanas.">
+  <div class="estreito pagina">
+    <header class="cabeca-pagina">
+      <span class="fantasma-ideograma" aria-hidden="true">進</span>
+      <p class="rotulo">Ferramentas</p>
+      <h1>Calculadora de progresso</h1>
+      <p class="lead">Quanto falta, e quantas semanas de treino isso significa.</p>
+    </header>
+    <form class="painel" id="form" onsubmit="return false">
+      <div class="grade-2">
+        <div class="campo"><label for="pe">PE atual</label><input type="number" id="pe" min="0" value="0" inputmode="numeric" /></div>
+        <div class="campo"><label for="reino">Reino</label><select id="reino">{dados.reinos.filter((r) => r.pe).map((r) => <option value={r.chave}>{r.nome}</option>)}</select></div>
+      </div>
+      <fieldset class="ritmo"><legend class="rotulo ouro">Seu ritmo por semana</legend>
+        <div class="grade-2">
+          <div class="campo"><label for="treinos">Treinos (0–3)</label><input type="number" id="treinos" min="0" max="3" value="3" /></div>
+          <div class="campo"><label for="missoes">Missões autonarradas (0–2)</label><select id="missoes"><option value="0">Nenhuma</option><option value="150">1 fácil</option><option value="250">1 média</option><option value="350">1 difícil</option><option value="300">2 fáceis</option><option value="500" selected>2 médias</option><option value="700">2 difíceis</option></select></div>
+          <div class="campo"><label for="extra">PE extra por semana (missões narradas, duelos)</label><input type="number" id="extra" min="0" value="0" /></div>
+          <div class="campo"><label for="bonus">Bônus em treinos</label><select id="bonus"><option value="0">Nenhum</option><option value="10" selected>Corpo Mortal (+10%)</option><option value="20">Prodígio Marcial (+20%)</option><option value="30">Os dois (+30%)</option></select></div>
+        </div>
+      </fieldset>
+    </form>
+    <div id="saida" class="saida" aria-live="polite"></div>
+  </div>
+</Base>
+
+<script>
+  import { progresso, reino, DADOS } from '../../../supabase/functions/_shared/regras';
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const nomeEst = (k: string) => DADOS.estagios.find((e) => e.chave === k)?.nome;
+  function atualizar() {
+    const pe = Math.max(0, Number($('pe').value) || 0);
+    const r = reino($('reino').value)!;
+    const porTreino = Math.round((r.treino ?? 0) * (1 + Number($('bonus').value) / 100));
+    const ritmo = Number($('treinos').value) * porTreino + Number($('missoes').value) + Number($('extra').value);
+    const p = progresso(pe, r.chave, undefined, ritmo);
+    const prox = p.proximo;
+    document.getElementById('saida')!.innerHTML = `
+      <p class="rotulo">Você está em</p><p class="grande">${r.nome} ${nomeEst(p.estagio)}</p>
+      ${prox && Number.isFinite(prox.pe) ? `
+        <p class="rotulo">Próximo</p><p class="grande">${reino(prox.reino)!.nome} ${nomeEst(prox.estagio)} <span class="mudo">(${prox.pe.toLocaleString('pt-BR')} PE)</span></p>
+        <dl class="numeros"><div><dt>Faltam</dt><dd>${p.falta.toLocaleString('pt-BR')} PE</dd></div><div><dt>Ritmo</dt><dd>${ritmo.toLocaleString('pt-BR')}/sem.</dd></div><div><dt>Estimativa</dt><dd>${p.semanas ?? '—'} semana${p.semanas === 1 ? '' : 's'}</dd></div><div><dt>Treino vale</dt><dd>${porTreino} PE</dd></div></dl>
+        ${p.precisaGargalo ? `<p class="nota">Para mudar de reino é preciso romper o <a href="../../biblioteca/cultivo/gargalo/">gargalo</a>: pedido de avanço de 40+ linhas e 3d6 no servidor. Ao avançar, você ganha +500 PE.</p>` : ''}`
+        : '<p class="nota">O próximo reino só é alcançado por evento.</p>'}
+      ${pe < (r.pe?.[0] ?? 0) ? `<p class="erro">Com ${pe} PE você ainda não chegou ao estágio Inicial de ${r.nome} (${r.pe?.[0]} PE).</p>` : ''}`;
+  }
+  document.getElementById('form')!.addEventListener('input', atualizar);
+  atualizar();
+</script>
+
+<style>
+  .ritmo { border: 0; padding: 0; margin: 1rem 0 0; }
+  .saida { margin-top: 2rem; }
+  .grande { font: 400 1.8rem var(--f-display); margin: 0 0 1rem; }
+  .numeros { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--linha); border: var(--borda); margin: 1rem 0; }
+  @media (min-width: 700px) { .numeros { grid-template-columns: repeat(4, 1fr); } }
+  .numeros div { background: var(--tinta-2); padding: .9rem 1rem; }
+  .numeros dt { font: 700 .72rem var(--f-ui); letter-spacing: .16em; text-transform: uppercase; color: var(--papel-3); }
+  .numeros dd { margin: .2rem 0 0; font: 700 1.3rem var(--f-ui); }
+</style>

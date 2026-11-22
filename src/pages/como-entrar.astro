@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { url, imagem } from '../lib/caminhos';
+import site from '../data/site.json';
+const img = imagem('como-entrar');
+---
+<Base titulo="Como entrar" descricao="Entre no grupo do WhatsApp de Murim: Céu Partido em quatro passos.">
+  <div class="como">
+    <picture class="como-arte"><source media="(max-width: 700px)" srcset={img.srcMovel} /><img src={img.src} alt={img.alt} width="1600" height="1000" loading="eager" /></picture>
+    <div class="estreito pagina como-texto">
+      <p class="rotulo ouro">O portão está aberto</p>
+      <h1>Como entrar</h1>
+      <ol class="passos-entrada">
+        <li><strong>Entre no grupo.</strong> O link leva direto ao WhatsApp.<br /><a class="btn" href={site.linkGrupo} rel="noopener" target="_blank">Entrar no grupo do WhatsApp</a></li>
+        <li><strong>Faça o tutorial</strong> <a href={url('/tutorial/')}>Primeira vez aqui?</a> (5 minutos).</li>
+        <li><strong>Crie sua conta e sua ficha</strong> em <a href={url('/conta/')}>Minha conta</a>. O site faz as contas por você.</li>
+        <li><strong>Leia o destino</strong> e envie a ficha. Quando a administração aprovar, seu personagem entra no Jianghu.</li>
+      </ol>
+      <section class="painel contato">
+        <h2>{site.contatoAdmin.nome}</h2>
+        <p>{site.contatoAdmin.texto}</p>
+        <p><a href={`mailto:${site.contatoAdmin.email}`}>{site.contatoAdmin.email}</a></p>
+      </section>
+    </div>
+  </div>
+</Base>
+<style>
+  .como { position: relative; isolation: isolate; }
+  .como-arte { position: absolute; inset: 0 0 auto 0; height: 26rem; z-index: -1; }
+  .como-arte img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.5) brightness(.5) sepia(.35); mask-image: linear-gradient(#000 40%, transparent); }
+  .como-texto { padding-top: 12rem; }
+  .passos-entrada { padding-left: 1.4rem; display: grid; gap: 1.2rem; font-size: 1.15rem; margin: 2rem 0; }
+  .passos-entrada li::marker { font: 400 1.3rem var(--f-display); color: var(--sangue-texto); }
+  .passos-entrada .btn { margin-top: .8rem; }
+  .contato h2 { margin-top: 0; }
+</style>
